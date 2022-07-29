@@ -31,7 +31,6 @@ export default NextAuth({
         //return dbusers.checkUserEmailPassword(credentials!.email, credentials!.passowrd)
         return {
           name: "Pepito",
-          hierarchy: "Client",
         };
       },
     }),
@@ -54,7 +53,7 @@ export default NextAuth({
         switch (account.type) {
           case "oauth":
             //TODO: verificar si existe en DB, sino, crearlo
-            const _user = { name: "Pepito", hierarchy: "Client" };
+            const _user = { name: "Pepito" };
             token.user = _user;
             break;
           case "credentials":

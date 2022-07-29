@@ -133,17 +133,17 @@ const LogInPage = () => {
                   fullWidth
                   sx={{ marginBottom: "1em" }}
                   type="email"
-                  placeholder="E-mail"
-                  label="E-mail"
-                  autoComplete="username"
+                  placeholder="Email"
+                  label="Email"
+                  autoComplete="current-user-1"
                   error={!!errors.email}
                   helperText={
                     !!errors.email
                       ? errors.email.message
-                      : "Escribe tu e-mail..."
+                      : "Escribe tu email..."
                   }
                   {...register("email", {
-                    required: "E-mail is required",
+                    required: "Email is required",
                     validate: (val) => validations.isEmail(val),
                   })}
                   InputProps={{
@@ -160,7 +160,7 @@ const LogInPage = () => {
                   type="password"
                   label="Password"
                   error={!!errors.password}
-                  autoComplete="current-password"
+                  autoComplete="current-password-1"
                   helperText={
                     !!errors.password
                       ? errors.password.message

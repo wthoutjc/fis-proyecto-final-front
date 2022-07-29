@@ -5,11 +5,11 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 //Interfaces
 import { SideBarData } from "../interfaces";
 
-const AdminSideBarStore: SideBarData[] = [
+const UserSidebar: SideBarData[] = [
   {
     to: "/home/account",
     title: "Account",
-    Icon: <AccountBoxIcon />, 
+    Icon: <AccountBoxIcon />,
   },
   {
     to: "/home/optionADMIN1",
@@ -33,60 +33,4 @@ const AdminSideBarStore: SideBarData[] = [
   },
 ];
 
-const EmployeeSideBarStore: SideBarData[] = [
-  {
-    to: "/home/account",
-    title: "Account",
-    Icon: <AccountBoxIcon />, 
-  },
-  {
-    to: "/home/optionEMPLOYEE1",
-    title: "optionEMPLOYEE1",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionEMPLOYEE2",
-    title: "optionEMPLOYEE2",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionEMPLOYEE3",
-    title: "optionEMPLOYEE3",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionEMPLOYEE4",
-    title: "optionEMPLOYEE4",
-    Icon: <AddBoxIcon />,
-  },
-];
-
-const ClientSideBarStore: SideBarData[] = [
-  {
-    to: "/home/account",
-    title: "Account",
-    Icon: <AccountBoxIcon />, 
-  },
-  {
-    to: "/home/optionCLIENT1",
-    title: "optionCLIENT1",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionCLIENT2",
-    title: "optionCLIENT2",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionCLIENT3",
-    title: "optionCLIENT3",
-    Icon: <AddBoxIcon />,
-  },
-  {
-    to: "/home/optionCLIENT4",
-    title: "optionCLIENT4",
-    Icon: <AddBoxIcon />,
-  },
-];
-
-export { AdminSideBarStore, EmployeeSideBarStore, ClientSideBarStore };
+export { UserSidebar };

@@ -17,7 +17,6 @@ const initialState: AuthState = {
     logged: false,
     id: "",
     name: "",
-    hierarchy: null,
   },
 };
 

@@ -1,2 +1,1 @@
-export * from "./ui"
-export * from "./authNext"
+export * from "./authNext";

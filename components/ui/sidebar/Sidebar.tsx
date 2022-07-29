@@ -6,15 +6,10 @@ import MuiDrawer from "@mui/material/Drawer";
 import { useAppSelector } from "../../../hooks";
 
 // SideBarData
-import {
-  AdminSideBarStore,
-  ClientSideBarStore,
-  EmployeeSideBarStore,
-} from "../../../store";
+import { UserSidebar } from "../../../store";
 
 // Interfaces - Types - Enum
 import { SideBarData } from "../../../interfaces";
-import { Hierarchy } from "../../../enum";
 
 // Components
 import { SidebarItem } from "./SidebarItem";
@@ -64,24 +59,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = () => {
-  const [data, setData] = useState<SideBarData[]>([]);
+  const [data, setData] = useState<SideBarData[]>(UserSidebar);
 
   const { sidebar } = useAppSelector((state) => state.ux);
-  const { user } = useAppSelector((state) => state.auth);
-  const { hierarchy } = user;
-
-  useEffect(() => {
-    switch (hierarchy) {
-      case Hierarchy.admin:
-        return setData(AdminSideBarStore);
-      case Hierarchy.employee:
-        return setData(EmployeeSideBarStore);
-      case Hierarchy.client:
-        return setData(ClientSideBarStore);
-      default:
-        return setData([]);
-    }
-  }, [hierarchy]);
 
   return (
     <Drawer
