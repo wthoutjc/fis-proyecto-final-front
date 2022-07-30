@@ -174,7 +174,6 @@ const CTable = ({ data }: { data: DBDataUsers[] }) => {
                       <TableCell align="center">{row.age}</TableCell>
                       <TableCell align="center">{row.email}</TableCell>
                       <TableCell align="center">{row.date}</TableCell>
-                      <TableCell align="center">{row.role}</TableCell>
                     </TableRow>
                   );
                 })}
