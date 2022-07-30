@@ -22,7 +22,7 @@ const DocumentPage = () => {
   };
 
   return (
-    <Layout title="Document">
+    <Layout title="Document - FileManager">
       <ConnectedLayout>
         <Box display="flex" flexDirection={"column"} sx={{ p: 2 }}>
           <Typography variant="body1" fontWeight={600} sx={{ mb: 1 }}>

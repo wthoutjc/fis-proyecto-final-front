@@ -23,7 +23,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params as { id: string };
 
   try {
-    const response = await fetch(`${process.env.HOST_NAME}api/data/${id}`);
+    console.log(`${process.env.HOST_NAME}/api/data/${id}`)
+
+    const response = await fetch(`${process.env.HOST_NAME}/api/data/${id}`);
     const document = await response.json();
 
     return {
