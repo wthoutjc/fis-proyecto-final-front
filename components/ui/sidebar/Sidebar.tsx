@@ -8,9 +8,6 @@ import { useAppSelector } from "../../../hooks";
 // SideBarData
 import { UserSidebar } from "../../../store";
 
-// Interfaces - Types - Enum
-import { SideBarData } from "../../../interfaces";
-
 // Components
 import { SidebarItem } from "./SidebarItem";
 
@@ -59,8 +56,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = () => {
-  const [data, setData] = useState<SideBarData[]>(UserSidebar);
-
   const { sidebar } = useAppSelector((state) => state.ux);
 
   return (
@@ -74,7 +69,7 @@ const Sidebar = () => {
       }
     >
       <List>
-        {data?.map((item, index) => (
+        {UserSidebar?.map((item, index) => (
           <SidebarItem key={index} item={item} open={sidebar.open} />
         ))}
       </List>

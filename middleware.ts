@@ -11,7 +11,10 @@ const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
     return NextResponse.next();
   }
 
-  if (req.nextUrl.pathname.startsWith("/home")) {
+  if (
+    req.nextUrl.pathname.startsWith("/home") ||
+    req.nextUrl.pathname.startsWith("/new")
+  ) {
     if (!req.cookies.get("next-auth.session-token")) {
       const url = req.nextUrl.clone();
       url.pathname = "/";
@@ -25,5 +28,5 @@ const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
 export { middleware };
 
 export const config = {
-  matcher: ["/", "/home", "/auth/login", "/auth/signup"],
+  matcher: ["/", "/new", "/home", "/auth/login", "/auth/signup"],
 };

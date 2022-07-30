@@ -3,6 +3,7 @@ import { Layout } from "../../components/layout";
 
 // Components
 import { ConnectedLayout } from "../../components/layout";
+import { OwnDocs } from "../../components/entries";
 import { CTable } from "../../components/ui/table";
 
 // Redux
@@ -21,7 +22,9 @@ const HomePage = ({ data }: Props) => {
   return (
     <Layout title="Welcome - App">
       <ConnectedLayout>
-        <Box sx={{ padding: "0 1em" }}></Box>
+        <Box sx={{ padding: "0 1em" }}>
+          <OwnDocs />
+        </Box>
       </ConnectedLayout>
     </Layout>
   );

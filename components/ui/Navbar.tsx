@@ -18,6 +18,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
 
 // Redux
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -27,11 +28,12 @@ import {
   openSidebar,
   closeSidebar,
   logout,
+  setFilter,
 } from "../../reducers";
 
 // Components
 // UI
-import { ActiveLink } from "./";
+import { ActiveLink, Search, SettingsSearch } from "./";
 
 // NextAuth
 import { signOut } from "next-auth/react";
@@ -96,8 +98,10 @@ const Navbar = () => {
 
   const { user } = useAppSelector((state) => state.auth);
   const { sidebar } = useAppSelector((state) => state.ux);
+  const { filter } = useAppSelector((state) => state.filter);
 
   const { logged } = user;
+  const { enabled } = filter;
 
   const turnOffUxRender = () => {
     dispatch(turnOffRender());
@@ -109,6 +113,15 @@ const Navbar = () => {
 
   const handleCloseSideBar = () => {
     dispatch(closeSidebar());
+  };
+
+  const handleActivateSettingFilters = () => {
+    dispatch(
+      setFilter({
+        ...filter,
+        enabled: !enabled,
+      })
+    );
   };
 
   useEffect(() => {
@@ -163,7 +176,25 @@ const Navbar = () => {
             </Link>
           </NextLink>
         </Box>
-
+        {logged && (
+          <Box width={500} display="flex">
+            <Search />
+            <Tooltip
+              title="Editar filtros"
+              onClick={handleActivateSettingFilters}
+            >
+              <IconButton
+                sx={{ m: 1 }}
+                color="primary"
+                aria-label="setting filters"
+                component="span"
+              >
+                <ManageSearchOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )}
+        {logged && enabled && <SettingsSearch />}
         {logged ? <ModuleLogged /> : <ModuleAuth setClicked={setClicked} />}
       </Toolbar>
     </AppBar>
