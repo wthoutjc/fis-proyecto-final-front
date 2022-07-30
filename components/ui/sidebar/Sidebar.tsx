@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { CSSObject, List, styled, Theme } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 
@@ -11,7 +10,7 @@ import { UserSidebar } from "../../../store";
 // Components
 import { SidebarItem } from "./SidebarItem";
 
-const DRAWER_WIDTH = 200;
+const DRAWER_WIDTH = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,

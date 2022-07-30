@@ -9,7 +9,7 @@
   }
 }
 .navbar-link {
-  text-decoration: none;
+  text-decoration: none !important;
   &:hover {
     color: rgba(255, 255, 255, 0.664);
     transition: color 0.2s;

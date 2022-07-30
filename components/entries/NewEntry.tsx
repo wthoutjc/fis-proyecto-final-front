@@ -62,8 +62,8 @@ const NewEntry = () => {
     },
   });
 
-  const handleNewDocument = () => {
-    console.log("New document");
+  const handleNewDocument = (registerDocument: RegisterDocument) => {
+    console.log(registerDocument);
   };
 
   return (
@@ -249,7 +249,7 @@ const NewEntry = () => {
               ),
             }}
           />
-          <Button fullWidth color="success" variant="contained">
+          <Button type="submit" fullWidth color="success" variant="contained">
             Añadir
           </Button>
         </Box>

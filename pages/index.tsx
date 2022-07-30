@@ -31,10 +31,10 @@ const Home = () => {
         <Box className="index__container">
           <Box className="index__landing">
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
-              App - CRUD
+              FileManager
             </Typography>
             <Typography variant="h5">
-              The best site to manage, analize and predict your data.
+              El mejor sitio para crear, editar y eliminar tus documentos.
             </Typography>
             <Box className="index__options">
               <Button onClick={handleNotification}> Learn more </Button>
