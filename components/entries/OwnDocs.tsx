@@ -25,7 +25,7 @@ export { OwnDocs };
 
 const DATA_TEST: IDocument[] = [
   {
-    id: 1234,
+    id: "1234",
     title: "Document 1",
     type: "libro",
     date: 123,
@@ -33,7 +33,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 1",
   },
   {
-    id: 1235,
+    id: "1235",
     title: "Document 2",
     type: "artículo científico",
     date: 123,
@@ -41,7 +41,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 2",
   },
   {
-    id: 1236,
+    id: "1236",
     title: "Document 2",
     type: "ponencia",
     date: 123,
@@ -49,7 +49,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 3",
   },
   {
-    id: 1237,
+    id: "1237",
     title: "Document 4",
     type: "libro",
     date: 123,
@@ -57,7 +57,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 4",
   },
   {
-    id: 1238,
+    id: "1238",
     title: "Document 5",
     type: "artículo científico",
     date: 123,
@@ -65,7 +65,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 5",
   },
   {
-    id: 1239,
+    id: "1239",
     title: "Document 6",
     type: "artículo científico",
     date: 123,
@@ -73,7 +73,7 @@ const DATA_TEST: IDocument[] = [
     editorial: "Editorial 6",
   },
   {
-    id: 1230,
+    id: "1230",
     title: "Document 7",
     type: "libro",
     date: 123,
