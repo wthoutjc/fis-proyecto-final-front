@@ -21,7 +21,9 @@ const EnhancedTableToolbar = ({
     router.push(`/document/${selected}`);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    router.push(`/delete/${selected}`);
+  };
 
   const handleReserve = () => {};
 

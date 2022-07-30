@@ -84,6 +84,7 @@ const Card = ({ document }: Props) => {
               open={open}
               anchorEl={anchorEl}
               to={`/document/${document.id}`}
+              deleteTo={`/delete/${document.id}`}
               handleClose={handleClose}
             />
           </>

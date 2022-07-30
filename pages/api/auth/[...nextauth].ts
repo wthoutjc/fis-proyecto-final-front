@@ -25,7 +25,7 @@ export default NextAuth({
         //TODO: 'Adaptar este modulo a los requerimientos del proyecto'
         //return dbusers.checkUserEmailPassword(credentials!.email, credentials!.passowrd)
         return {
-          name: "Pepito",
+          name: "Pepito 1 Perez",
         };
       },
     }),

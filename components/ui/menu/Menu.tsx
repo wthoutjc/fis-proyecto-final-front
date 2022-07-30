@@ -19,14 +19,19 @@ interface Props {
   open: boolean;
   anchorEl: null | HTMLElement;
   to: string;
+  deleteTo: string;
   handleClose: () => void;
 }
 
-const Menu = ({ open, anchorEl, to, handleClose }: Props) => {
+const Menu = ({ open, anchorEl, to, deleteTo, handleClose }: Props) => {
   const router = useRouter();
 
   const handleTo = () => {
     router.push(to);
+  };
+
+  const handleDeleteTo = () => {
+    router.push(deleteTo);
   };
 
   return (
@@ -52,7 +57,7 @@ const Menu = ({ open, anchorEl, to, handleClose }: Props) => {
               </Typography>
             </ListItemText>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={handleDeleteTo}>
             <ListItemIcon>
               <DeleteIcon fontSize="small" />
             </ListItemIcon>

@@ -2,18 +2,20 @@ import { GetServerSideProps } from "next";
 import { ConnectedLayout, Layout } from "../../components/layout";
 
 // Components
-import { ReadEntry } from "../../components/entries";
+import { DeleteEntry } from "../../components/entries";
+
+// Interfaces
 import { IDocument } from "../../interfaces";
 
 interface Props {
   document: IDocument;
 }
 
-const EntryPage = ({ document }: Props) => {
+const DeleteEntryPage = ({ document }: Props) => {
   return (
-    <Layout title="Document">
+    <Layout title="Delete - FileManager">
       <ConnectedLayout>
-        <ReadEntry document={document} />
+        <DeleteEntry document={document} />
       </ConnectedLayout>
     </Layout>
   );
@@ -40,4 +42,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 };
 
-export default EntryPage;
+export default DeleteEntryPage;

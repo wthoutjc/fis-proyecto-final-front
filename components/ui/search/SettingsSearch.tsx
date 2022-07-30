@@ -10,11 +10,16 @@ import {
   Checkbox,
   Tooltip,
 } from "@mui/material";
-import { useEffect, useRef, createRef, useMemo } from "react";
+import { useEffect, useRef, createRef, useMemo, useState } from "react";
 
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { setFilter, setCurrentFilter, filterSlice } from "../../../reducers";
+import {
+  enableFilter,
+  setCurrentFilter,
+  setDateFilter,
+  setOwnDocsFilter,
+} from "../../../reducers";
 
 // Icons
 import CloseIcon from "@mui/icons-material/Close";
@@ -47,7 +52,7 @@ const SettingsSearch = () => {
         settingSearchRef.current &&
         !settingSearchRef.current.contains(event.target as Node)
       ) {
-        return dispatch(setFilter({ ...filter, enabled: !filter.enabled }));
+        return dispatch(enableFilter({ ...filter, enabled: !filter.enabled }));
       }
     }
 
@@ -86,7 +91,7 @@ const SettingsSearch = () => {
           Editar filtros
         </Typography>
         <IconButton
-          onClick={() => dispatch(setFilter({ ...filter, enabled: false }))}
+          onClick={() => dispatch(enableFilter({ ...filter, enabled: false }))}
           sx={{ m: 1 }}
           color="primary"
           aria-label="setting filters"
@@ -135,8 +140,15 @@ const SettingsSearch = () => {
           </Typography>
           <Tooltip title="Activar fecha">
             <Checkbox
-              // checked={checked}
-              // onChange={handleChange}
+              checked={filter.dateFilter}
+              onChange={() => {
+                dispatch(
+                  setDateFilter({
+                    ...filter,
+                    dateFilter: !filter.dateFilter,
+                  })
+                );
+              }}
               size="small"
               inputProps={{ "aria-label": "controlled" }}
             />
@@ -157,7 +169,7 @@ const SettingsSearch = () => {
             }}
           >
             <TextField
-              disabled={true}
+              disabled={!filter.dateFilter}
               sx={{ width: "45%" }}
               size="small"
               id="outlined-select-currency"
@@ -165,7 +177,7 @@ const SettingsSearch = () => {
               helperText="Selecciona la fecha inicial"
             />
             <TextField
-              disabled={true}
+              disabled={!filter.dateFilter}
               sx={{ width: "45%" }}
               size="small"
               id="outlined-select-currency"
@@ -180,8 +192,15 @@ const SettingsSearch = () => {
           </Typography>
           <Tooltip title="Activar solo doc. propios">
             <Checkbox
-              // checked={checked}
-              // onChange={handleChange}
+              checked={filter.ownDocsFilter}
+              onChange={() => {
+                dispatch(
+                  setOwnDocsFilter({
+                    ...filter,
+                    ownDocsFilter: !filter.ownDocsFilter,
+                  })
+                );
+              }}
               size="small"
               inputProps={{ "aria-label": "controlled" }}
             />

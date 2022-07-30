@@ -17,10 +17,9 @@ const Home = () => {
   const handleNotification = () => {
     const payload: INotification = {
       id: uuid(),
-      title: "Success:",
-      message:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, iusto quibusdam laboriosam magni at nesciunt quam. Architecto dignissimos numquam, fugiat rem commodi neque enim optio. Ut odit deserunt explicabo tenetur? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, iusto quibusdam laboriosam magni at nesciunt quam. Architecto dignissimos numquam, fugiat rem commodi neque enim optio. Ut odit deserunt explicabo tenetur?",
-      severity: "error",
+      title: "Información:",
+      message: "Sitio en construcción ",
+      severity: "info",
     };
     dispatch(newNotification(payload));
   };
@@ -37,9 +36,9 @@ const Home = () => {
               El mejor sitio para crear, editar y eliminar tus documentos.
             </Typography>
             <Box className="index__options">
-              <Button onClick={handleNotification}> Learn more </Button>
+              <Button onClick={handleNotification}> Aprender más </Button>
               <Divider orientation="vertical" flexItem />
-              <Button variant="contained"> About </Button>
+              <Button variant="contained"> Acerca de </Button>
             </Box>
           </Box>
         </Box>

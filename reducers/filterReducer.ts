@@ -16,6 +16,8 @@ const initialState: FilterState = {
   filter: {
     enabled: false,
     filters: ["autor", "título", "editorial"],
+    dateFilter: false,
+    ownDocsFilter: false,
     currentFilter: "título",
   },
 };
@@ -24,10 +26,22 @@ const filterSlice = createSlice({
   name: "[FILTER]",
   initialState,
   reducers: {
-    setFilter: (state: FilterState, action: FilterAction) => {
+    enableFilter: (state: FilterState, action: FilterAction) => {
       state.filter = {
         ...state.filter,
         enabled: action.payload.enabled,
+      };
+    },
+    setDateFilter: (state: FilterState, action: FilterAction) => {
+      state.filter = {
+        ...state.filter,
+        dateFilter: action.payload.dateFilter,
+      };
+    },
+    setOwnDocsFilter: (state: FilterState, action: FilterAction) => {
+      state.filter = {
+        ...state.filter,
+        ownDocsFilter: action.payload.ownDocsFilter,
       };
     },
     setCurrentFilter: (state: FilterState, action: FilterAction) => {
@@ -42,7 +56,12 @@ const filterSlice = createSlice({
 export { filterSlice };
 
 // Actions
-export const { setFilter, setCurrentFilter } = filterSlice.actions;
+export const {
+  enableFilter,
+  setDateFilter,
+  setOwnDocsFilter,
+  setCurrentFilter,
+} = filterSlice.actions;
 
 // Selector to access to the store
 export const selectFilter = (state: AppState) => state.filter;

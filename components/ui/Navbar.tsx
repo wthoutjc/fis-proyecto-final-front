@@ -28,7 +28,7 @@ import {
   openSidebar,
   closeSidebar,
   logout,
-  setFilter,
+  enableFilter,
 } from "../../reducers";
 
 // Components
@@ -117,7 +117,7 @@ const Navbar = () => {
 
   const handleActivateSettingFilters = () => {
     dispatch(
-      setFilter({
+      enableFilter({
         ...filter,
         enabled: !enabled,
       })
