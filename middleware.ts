@@ -26,7 +26,3 @@ const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
 };
 
 export { middleware };
-
-export const config = {
-  matcher: ["/", "/new", "/home", "/auth/login", "/auth/signup"],
-};
