@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { useRouter } from "next/router";
 
 // Interface
 import { IDocument } from "../../interfaces";
@@ -20,6 +21,12 @@ interface Props {
 }
 
 const Card = ({ document }: Props) => {
+  const router = useRouter();
+
+  const handleTo = () => {
+    router.push(`/document/${document.id}`);
+  };
+
   return (
     <MUICard
       sx={{
@@ -68,7 +75,7 @@ const Card = ({ document }: Props) => {
         </CardContent>
       </Box>
       <CardActions>
-        <Button size="small" variant="contained">
+        <Button size="small" variant="contained" onClick={handleTo}>
           Ver
         </Button>
         <IconButton aria-label="delete" color="error">

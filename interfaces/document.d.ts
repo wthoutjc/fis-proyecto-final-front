@@ -1,5 +1,5 @@
 export interface IDocument {
-  id: number;
+  id: string;
   title: string;
   type: "libro" | "ponencia" | "artículo científico";
   date: number;

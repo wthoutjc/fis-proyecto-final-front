@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { ConnectedLayout, Layout } from "../../components/layout";
 
 // Components
@@ -8,9 +7,7 @@ const NewDocumentPage = () => {
   return (
     <Layout title="New Document - App">
       <ConnectedLayout>
-        <Box sx={{ padding: "0 1em" }}>
-          <NewEntry />
-        </Box>
+        <NewEntry />
       </ConnectedLayout>
     </Layout>
   );

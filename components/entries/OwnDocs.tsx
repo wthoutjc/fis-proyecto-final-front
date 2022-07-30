@@ -8,7 +8,7 @@ import { IDocument } from "../../interfaces";
 
 const OwnDocs = () => {
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 2, mb: 2  }}>
       <Typography variant="body1" fontWeight={600}>
         Mis documentos
       </Typography>

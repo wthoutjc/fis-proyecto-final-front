@@ -24,7 +24,8 @@
   height: 100%;
   position: absolute;
   z-index: 1;
-  top:0;
+  top: 0;
+  background-color: #1e8fff38;
   border-right: 4px solid $whitePrimary;
   animation: heightUp 0.2s ease-in-out;
 }

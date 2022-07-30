@@ -1,25 +1,19 @@
 import React, { useState, useMemo } from "react";
 
 import {
-  alpha,
   Box,
   Checkbox,
-  IconButton,
   Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TablePagination,
   TableRow,
-  Toolbar,
-  Tooltip,
-  Typography,
 } from "@mui/material";
 
 // Interface
-import { DBDataUsers } from "../../../interfaces";
+import { IDocument } from "../../../interfaces";
 
 // Components
 import { EnhancedTableToolbar, EnhancedTableHead } from "./";
@@ -40,22 +34,22 @@ function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
+  a: { [key in Key]: number | string | string[] },
+  b: { [key in Key]: number | string | string[] }
 ) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-const CTable = ({ data }: { data: DBDataUsers[] }) => {
+const CTable = ({ data }: { data: IDocument[] }) => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState((page - 1) * limit);
 
   // Order States
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof DBDataUsers>("id");
+  const [orderBy, setOrderBy] = useState<keyof IDocument>("id");
 
   // Selected
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -71,7 +65,7 @@ const CTable = ({ data }: { data: DBDataUsers[] }) => {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof DBDataUsers
+    property: keyof IDocument
   ) => {
     const isAsc = orderBy === property && order == "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -163,17 +157,17 @@ const CTable = ({ data }: { data: DBDataUsers[] }) => {
                         />
                       </TableCell>
                       <TableCell
+                        align="center"
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="none"
                       >
-                        {row.id}
+                        {row.title}
                       </TableCell>
-                      <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center">{row.age}</TableCell>
-                      <TableCell align="center">{row.email}</TableCell>
                       <TableCell align="center">{row.date}</TableCell>
+                      <TableCell align="center">{row.autors}</TableCell>
+                      <TableCell align="center">{row.type}</TableCell>
+                      <TableCell align="center">{row.editorial}</TableCell>
                     </TableRow>
                   );
                 })}

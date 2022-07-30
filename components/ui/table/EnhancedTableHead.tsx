@@ -10,7 +10,7 @@ import { visuallyHidden } from "@mui/utils";
 import React from "react";
 
 // Interface
-import { DBDataUsers } from "../../../interfaces";
+import { IDocument } from "../../../interfaces";
 
 type Order = "asc" | "desc";
 
@@ -18,7 +18,7 @@ interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof DBDataUsers
+    property: keyof IDocument
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -28,17 +28,17 @@ interface EnhancedTableProps {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof DBDataUsers;
+  id: keyof IDocument;
   label: string;
   numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
-  { id: "id", numeric: true, disablePadding: false, label: "ID" },
-  { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "age", numeric: true, disablePadding: false, label: "Age" },
-  { id: "email", numeric: false, disablePadding: true, label: "Email" },
-  { id: "date", numeric: true, disablePadding: false, label: "Date" },
+  { id: "title", numeric: true, disablePadding: false, label: "Título" },
+  { id: "date", numeric: false, disablePadding: true, label: "Fecha" },
+  { id: "autors", numeric: true, disablePadding: false, label: "Autores" },
+  { id: "type", numeric: false, disablePadding: true, label: "Tipo" },
+  { id: "editorial", numeric: true, disablePadding: false, label: "Editorial" },
 ];
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
@@ -52,7 +52,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   } = props;
 
   const createSortHandler =
-    (property: keyof DBDataUsers) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof IDocument) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 

@@ -3,17 +3,17 @@ import { Layout } from "../../components/layout";
 
 // Components
 import { ConnectedLayout } from "../../components/layout";
-import { OwnDocs } from "../../components/entries";
+import { OwnDocs, Explore } from "../../components/entries";
 import { CTable } from "../../components/ui/table";
 
 // Redux
 import { useAppSelector } from "../../hooks";
 
 //Interface
-import { DBDataUsers } from "../../interfaces";
+import { IDocument } from "../../interfaces";
 
 interface Props {
-  data: DBDataUsers[];
+  data: IDocument[];
 }
 
 const HomePage = ({ data }: Props) => {
@@ -22,9 +22,8 @@ const HomePage = ({ data }: Props) => {
   return (
     <Layout title="Welcome - App">
       <ConnectedLayout>
-        <Box sx={{ padding: "0 1em" }}>
-          <OwnDocs />
-        </Box>
+        <OwnDocs />
+        <Explore />
       </ConnectedLayout>
     </Layout>
   );
