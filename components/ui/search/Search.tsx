@@ -8,6 +8,10 @@ import { useAppDispatch, useAppSelector } from "../../../hooks";
 const Search = () => {
   const { filter } = useAppSelector((state) => state.filter);
 
+  const handleSearch = () => {
+    console.log("search");
+  };
+
   return (
     <Box
       sx={{
@@ -27,7 +31,14 @@ const Search = () => {
             label={`Buscar por ${filter.currentFilter}`}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment
+                onClick={handleSearch}
+                  position="start"
+                  sx={{
+                    color: "gray",
+                    ":hover": { cursor: "pointer", color: "white" },
+                  }}
+                >
                   <SearchIcon />
                 </InputAdornment>
               ),

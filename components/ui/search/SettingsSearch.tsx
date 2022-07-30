@@ -7,6 +7,8 @@ import {
   TextField,
   Typography,
   capitalize,
+  Checkbox,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useRef, createRef, useMemo } from "react";
 
@@ -61,12 +63,12 @@ const SettingsSearch = () => {
       ref={settingSearchRef}
       sx={{
         position: "absolute",
-        top: 258,
-        left: 0,
+        top: 408,
+        left: -10,
         right: 0,
         bottom: 0,
-        width: "600px",
-        height: "200px",
+        width: "500px",
+        height: "350px",
         margin: "auto",
         p: 2,
         zIndex: 1,
@@ -102,13 +104,11 @@ const SettingsSearch = () => {
             justifyContent: "space-around",
           }}
         >
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            Categoria
-          </Typography>
           <TextField
-            sx={{ width: "50%" }}
+            sx={{ width: "100%" }}
             id="outlined-select-currency"
             select
+            size="small"
             label="Categoria"
             value={filter.currentFilter}
             onChange={(e) => {
@@ -128,6 +128,64 @@ const SettingsSearch = () => {
               </MenuItem>
             ))}
           </TextField>
+        </Box>
+        <Box display="flex" alignItems={"flex-end"}>
+          <Typography variant="body2" sx={{ mb: 1 }}>
+            Fecha
+          </Typography>
+          <Tooltip title="Activar fecha">
+            <Checkbox
+              // checked={checked}
+              // onChange={handleChange}
+              size="small"
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </Tooltip>
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <TextField
+              disabled={true}
+              sx={{ width: "45%" }}
+              size="small"
+              id="outlined-select-currency"
+              type={"date"}
+              helperText="Selecciona la fecha inicial"
+            />
+            <TextField
+              disabled={true}
+              sx={{ width: "45%" }}
+              size="small"
+              id="outlined-select-currency"
+              type={"date"}
+              helperText="Selecciona la fecha inicial"
+            />
+          </Box>
+        </Box>
+        <Box display="flex" alignItems={"flex-end"}>
+          <Typography variant="body2" sx={{ mb: 1 }}>
+            Solo documentos propios
+          </Typography>
+          <Tooltip title="Activar solo doc. propios">
+            <Checkbox
+              // checked={checked}
+              // onChange={handleChange}
+              size="small"
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </Tooltip>
         </Box>
       </Stack>
     </Box>
