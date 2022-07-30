@@ -1,13 +1,17 @@
 import { ConnectedLayout, Layout } from "../../components/layout";
 
 // Components
-import { NewEntry } from "../../components/entries";
+import { NewEntry, RecentlyCreated } from "../../components/entries";
+import { Box } from "@mui/material";
 
 const NewDocumentPage = () => {
   return (
-    <Layout title="New Document - App">
+    <Layout title="New Document - FileManager">
       <ConnectedLayout>
-        <NewEntry />
+        <Box display="flex">
+          <NewEntry />
+          <RecentlyCreated />
+        </Box>
       </ConnectedLayout>
     </Layout>
   );

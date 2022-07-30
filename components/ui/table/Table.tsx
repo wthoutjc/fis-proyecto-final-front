@@ -117,7 +117,7 @@ const CTable = ({ data }: { data: IDocument[] }) => {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected[0]} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -164,10 +164,10 @@ const CTable = ({ data }: { data: IDocument[] }) => {
                       >
                         {row.title}
                       </TableCell>
-                      <TableCell align="center">{row.date}</TableCell>
-                      <TableCell align="center">{row.autors}</TableCell>
-                      <TableCell align="center">{row.type}</TableCell>
-                      <TableCell align="center">{row.editorial}</TableCell>
+                      <TableCell align="center">{row.ownerName}</TableCell>
+                      <TableCell align="center">
+                        <i>{row.dateLastModified}</i> - {row.lastModifiedName}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

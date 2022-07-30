@@ -1,18 +1,20 @@
 import { Box, Typography } from "@mui/material";
-
-// Components
-import { Card } from "../../components/entries";
-
-// Interfaces
 import { IDocument } from "../../interfaces";
 
-const OwnDocs = () => {
+// Component
+import { Card } from "../entries";
+
+const RecentlyCreated = () => {
   return (
-    <Box sx={{ p: 2, mb: 2 }}>
-      <Typography variant="body1" fontWeight={600}>
-        Mis documentos
+    <Box sx={{ p: 2 }}>
+      <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
+        Agregados recientemente
       </Typography>
-      <Box display="flex" sx={{ overflow: "auto", mb: 2 }}>
+      <Box
+        display={"flex"}
+        flexDirection="column"
+        sx={{ maxHeight: "750px", overflow: "auto" }}
+      >
         {DATA.map((document, i) => (
           <Card key={i} document={document} />
         ))}
@@ -21,13 +23,14 @@ const OwnDocs = () => {
   );
 };
 
-export { OwnDocs };
+export { RecentlyCreated };
 
 const DATA: IDocument[] = [
   {
     id: "1",
+    typeId: "ISBN",
     title: "Test 1",
-    type: "ponencia",
+    type: "libro",
     ownerName: "Pepito 1 Perez",
     ownerEmail: "pepito@correo.com",
     lastModifiedName: "Pepito 1 Perez",
@@ -38,6 +41,7 @@ const DATA: IDocument[] = [
   },
   {
     id: "2",
+    typeId: "ISBN",
     title: "Test 2",
     type: "libro",
     ownerName: "Pepito 2 Perez",
@@ -45,23 +49,25 @@ const DATA: IDocument[] = [
     lastModifiedName: "Pepito 2 Perez",
     dateCreated: 12344,
     dateLastModified: 12344,
-    autors: ["Test", "Test 3"],
+    autors: ["Test"],
     editorial: "Test 2",
   },
   {
     id: "3",
+    typeId: "ISBN",
     title: "Test 3",
-    type: "artículo científico",
+    type: "libro",
     ownerName: "Pepito 3 Perez",
     ownerEmail: "pepito@correo.com",
     lastModifiedName: "Pepito 3 Perez",
     dateCreated: 32344,
     dateLastModified: 32344,
-    autors: ["Test", "Test 2"],
+    autors: ["Test"],
     editorial: "Test 3",
   },
   {
     id: "4",
+    typeId: "ISBN",
     title: "Test 4",
     type: "libro",
     ownerName: "Pepito 4 Perez",

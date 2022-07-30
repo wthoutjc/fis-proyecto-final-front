@@ -1,16 +1,10 @@
 import NextAuth from "next-auth";
 
 // Providers
-import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 
 export default NextAuth({
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
     Credentials({
       name: "Custom Login",
       credentials: {
@@ -52,11 +46,6 @@ export default NextAuth({
         token.accessToken = account.access_token;
 
         switch (account.type) {
-          case "oauth":
-            //TODO: verificar si existe en DB, sino, crearlo
-            const _user = { name: "Pepito" };
-            token.user = _user;
-            break;
           case "credentials":
             token.user = user;
             break;

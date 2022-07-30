@@ -22,7 +22,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const Layout = ({ title = "App", children }: Props) => {
+const Layout = ({ title = "FileManager", children }: Props) => {
   const { data, status } = useSession();
 
   const dispatch = useAppDispatch();

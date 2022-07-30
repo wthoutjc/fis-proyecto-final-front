@@ -33,12 +33,20 @@ interface HeadCell {
   numeric: boolean;
 }
 
-const headCells: readonly HeadCell[] = [
+const headHomeCells: readonly HeadCell[] = [
   { id: "title", numeric: true, disablePadding: false, label: "Título" },
-  { id: "date", numeric: false, disablePadding: true, label: "Fecha" },
-  { id: "autors", numeric: true, disablePadding: false, label: "Autores" },
-  { id: "type", numeric: false, disablePadding: true, label: "Tipo" },
-  { id: "editorial", numeric: true, disablePadding: false, label: "Editorial" },
+  {
+    id: "ownerName",
+    numeric: true,
+    disablePadding: false,
+    label: "Propietario",
+  },
+  {
+    id: "dateLastModified",
+    numeric: false,
+    disablePadding: true,
+    label: "Última modificación",
+  },
 ];
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
@@ -70,7 +78,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {headHomeCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={"center"}

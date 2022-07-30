@@ -27,7 +27,14 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
-interface RegisterDocument {
+// Interfaces
+import { IDocument } from "../../interfaces";
+
+interface Props {
+  document: IDocument;
+}
+
+interface UpdateDocument {
   title: string;
   date: number;
   autores: string[];
@@ -48,41 +55,27 @@ const AUTORES = [
   { name: "Kelly Snyder" },
 ];
 
-const NewEntry = () => {
+const EditEntry = ({ document }: Props) => {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterDocument>();
+  } = useForm<UpdateDocument>({
+    defaultValues: {
+      title: document.title,
+      autores: document.autors,
+      editorial: document.editorial,
+    },
+  });
 
-  const { user } = useAppSelector((state) => state.auth);
-  const { name } = user;
-
-  const handleNewDocument = (registerDocument: RegisterDocument) => {
-    console.log(registerDocument);
+  const handleUpdateDocument = (updateDocument: UpdateDocument) => {
+    console.log(updateDocument);
   };
 
   return (
-    <Box sx={{ p: 2, width: "70%" }}>
-      <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
-        Nuevo documento
-      </Typography>
-      <ul style={{ marginLeft: 20 }}>
-        <li>
-          <Typography variant="body2" fontWeight={400} sx={{ mb: 2 }}>
-            {name}, acá podrás crear un nuevo documento, para ello, solo es
-            obligatorio poner el título del documento, luego de eso podrás
-            añadirlo a tu libreria donde otros podrán verlo y modificarlo.
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body2" fontWeight={400} sx={{ mb: 2 }}>
-            Sólo tú puedes borrar los documentos que creas.
-          </Typography>
-        </li>
-      </ul>
-      <form onSubmit={handleSubmit(handleNewDocument)}>
+    <Box sx={{ p: 2, backgroundColor: "#123" }}>
+      <form onSubmit={handleSubmit(handleUpdateDocument)}>
         <Box sx={{ backgroundColor: "#222f3e", p: 3, borderRadius: 2 }}>
           <TextField
             fullWidth
@@ -267,7 +260,7 @@ const NewEntry = () => {
             }}
           />
           <Button type="submit" fullWidth color="success" variant="contained">
-            Añadir
+            ACTUALIZAR
           </Button>
         </Box>
       </form>
@@ -275,4 +268,4 @@ const NewEntry = () => {
   );
 };
 
-export { NewEntry };
+export { EditEntry };

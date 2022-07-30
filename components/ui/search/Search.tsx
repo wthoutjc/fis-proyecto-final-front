@@ -9,7 +9,14 @@ const Search = () => {
   const { filter } = useAppSelector((state) => state.filter);
 
   return (
-    <Box sx={{ width: "100%", m: 1 }}>
+    <Box
+      sx={{
+        width: "100%",
+        m: 1,
+        backgroundColor: "#112233aa",
+        borderRadius: 1,
+      }}
+    >
       <Autocomplete
         freeSolo
         id="free-solo-2-demo"

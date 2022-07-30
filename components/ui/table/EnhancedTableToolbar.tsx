@@ -1,16 +1,29 @@
+import { useRouter } from "next/router";
 import { alpha, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
 
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import FileOpenIcon from "@mui/icons-material/FileOpen";
+import BookIcon from "@mui/icons-material/Book";
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  selected: string;
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
+const EnhancedTableToolbar = ({
+  numSelected,
+  selected,
+}: EnhancedTableToolbarProps) => {
+  const router = useRouter();
+
+  const handleOpen = () => {
+    router.push(`/document/${selected}`);
+  };
+
+  const handleDelete = () => {};
+
+  const handleReserve = () => {};
 
   return (
     <Toolbar
@@ -33,7 +46,9 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected > 1
+            ? `${numSelected} seleccionados`
+            : `${numSelected} seleccionado`}
         </Typography>
       ) : (
         <Typography
@@ -42,21 +57,27 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           id="tableTitle"
           component="div"
         >
-          Data
+          Documentos
         </Typography>
       )}
-      {numSelected === 1 ? (
-        <Tooltip title="Ver">
-          <IconButton>
-            <VisibilityIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+      {numSelected === 1 && (
+        <>
+          <Tooltip title="Ver">
+            <IconButton onClick={handleOpen}>
+              <FileOpenIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Borrar" onClick={handleDelete}>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Reservar" onClick={handleReserve}>
+            <IconButton>
+              <BookIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );

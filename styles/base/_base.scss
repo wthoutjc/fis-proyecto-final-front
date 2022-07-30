@@ -5,6 +5,7 @@
   font-family: "Montserrat", sans-serif !important;
 }
 .fade-animation {
+  width: 250px;
   animation: opacityTransition 0.3s ease-in;
 }
 @keyframes opacityTransition {

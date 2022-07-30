@@ -9,7 +9,6 @@ import {
   InputAdornment,
   Link,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 
@@ -23,14 +22,10 @@ import { ActiveLink } from "../../../components/ui";
 import { Layout, AuthLayout } from "../../../components/layout";
 
 // Icons
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+
 import PasswordIcon from "@mui/icons-material/Password";
 import EmailIcon from "@mui/icons-material/Email";
 import NextLink from "next/link";
-
-// API - Next
-import { getProviders } from "next-auth/react";
 
 // Next Auth
 import { signIn } from "next-auth/react";
@@ -60,8 +55,6 @@ const LogInPage = () => {
 
   const [showError, setShowError] = useState(false);
 
-  const [providers, setProviders] = useState<any | null>(null);
-
   const onLoginUser = async ({ email, password }: LoginInfo) => {
     setShowError(false);
 
@@ -81,10 +74,6 @@ const LogInPage = () => {
     }
   }, [clicked, dispatch]);
 
-  useEffect(() => {
-    getProviders().then((provs) => setProviders(provs));
-  }, []);
-
   return (
     <Layout title={"App - Login"}>
       <AuthLayout>
@@ -98,34 +87,6 @@ const LogInPage = () => {
               }
             >
               <Typography variant="h4">Iniciar sesión</Typography>
-              {providers && (
-                <Box display={"flex"}>
-                  {Object.values(providers).map((provider: any) => {
-                    if (provider.id === "credentials") {
-                      return null;
-                    }
-
-                    return (
-                      <Tooltip
-                        title={`Inicia sesión con ${provider.name}`}
-                        key={provider.id}
-                      >
-                        <Button
-                          variant="outlined"
-                          className="login__providers"
-                          onClick={async () => await signIn(provider.id)}
-                        >
-                          {provider.name === "Google" && <GoogleIcon />}
-                          {provider.name === "GitHub" && <GitHubIcon />}
-                        </Button>
-                      </Tooltip>
-                    );
-                  })}
-                </Box>
-              )}
-              <Typography variant="body2" sx={{ fontStyle: "italic" }}>
-                ó usa tu cuenta de email
-              </Typography>
               <Box
                 sx={{ boxSizing: "border-box", padding: "1em", width: "100%" }}
               >

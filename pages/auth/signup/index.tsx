@@ -25,8 +25,6 @@ import { ActiveLink } from "../../../components/ui";
 import { v4 as uuid } from "uuid";
 
 // Icons
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
 import PasswordIcon from "@mui/icons-material/Password";
@@ -57,8 +55,6 @@ const SignUpPage = () => {
     formState: { errors },
   } = useForm<RegisterInfo>();
 
-  const [providers, setProviders] = useState<any | null>(null);
-
   useEffect(() => {
     if (clicked) {
       dispatch(incrementClicks());
@@ -81,10 +77,6 @@ const SignUpPage = () => {
     await signIn("credentials", { email, password });
   };
 
-  useEffect(() => {
-    getProviders().then((provs) => setProviders(provs));
-  }, []);
-
   return (
     <Layout title={"App - Signup"}>
       <AuthLayout>
@@ -98,34 +90,6 @@ const SignUpPage = () => {
               }
             >
               <Typography variant="h4">Crear una cuenta</Typography>
-              {providers && (
-                <Box display={"flex"}>
-                  {Object.values(providers).map((provider: any) => {
-                    if (provider.id === "credentials") {
-                      return null;
-                    }
-
-                    return (
-                      <Tooltip
-                        title={`Inicia sesión con ${provider.name}`}
-                        key={provider.id}
-                      >
-                        <Button
-                          variant="outlined"
-                          className="signup__providers"
-                          onClick={async () => await signIn(provider.id)}
-                        >
-                          {provider.name === "Google" && <GoogleIcon />}
-                          {provider.name === "GitHub" && <GitHubIcon />}
-                        </Button>
-                      </Tooltip>
-                    );
-                  })}
-                </Box>
-              )}
-              <Typography variant="body2" sx={{ fontStyle: "italic" }}>
-                ó usa tu e-mail para registrarte.
-              </Typography>
               <Box
                 sx={{ boxSizing: "border-box", padding: "1em", width: "100%" }}
               >
@@ -243,12 +207,14 @@ const SignUpPage = () => {
                 ¡Hola, Amigo!
               </Typography>
               <Typography variant="body1" className="fade-animation">
-                Digita tus datos personales y comienza a aprender con nosotros.
+                Digita tus datos personales y comienza a administrat tus
+                documentos con nosotros.
               </Typography>
               <ActiveLink href="/auth/login">
                 <Button
                   variant={"outlined"}
                   className="fade-animation"
+                  size="medium"
                   onClick={() => setClicked(true)}
                 >
                   <Typography variant="body1">INICIAR SESIÓN</Typography>
