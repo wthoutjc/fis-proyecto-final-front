@@ -10,7 +10,7 @@ import {
   Checkbox,
   Tooltip,
 } from "@mui/material";
-import { useEffect, useRef, createRef, useMemo, useState } from "react";
+import { useEffect, useRef, createRef, useMemo } from "react";
 
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../hooks";
@@ -68,7 +68,7 @@ const SettingsSearch = () => {
       ref={settingSearchRef}
       sx={{
         position: "absolute",
-        top: 408,
+        top: 230,
         left: -10,
         right: 0,
         bottom: 0,
