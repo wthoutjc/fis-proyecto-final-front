@@ -171,7 +171,7 @@ const Navbar = () => {
                 variant="h6"
                 sx={{ userSelect: "none", cursor: "pointer", ml: 2 }}
               >
-                FileManager
+                WriteLibrary
               </Typography>
             </Link>
           </NextLink>

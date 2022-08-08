@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 
 const NewDocumentPage = () => {
   return (
-    <Layout title="New Document - FileManager">
+    <Layout title="New Document - WriteLibraryr">
       <ConnectedLayout>
         <Box display="flex">
           <NewEntry />

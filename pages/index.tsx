@@ -26,11 +26,11 @@ const Home = () => {
 
   return (
     <>
-      <Layout title={"Home - FileManager"}>
+      <Layout title={"Home - WriteLibrary"}>
         <Box className="index__container">
           <Box className="index__landing">
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
-              FileManager
+            WriteLibrary
             </Typography>
             <Typography variant="h5">
               El mejor sitio para crear, editar y eliminar tus documentos.

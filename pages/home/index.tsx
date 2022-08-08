@@ -6,7 +6,7 @@ import { OwnDocs, Explore } from "../../components/entries";
 
 const HomePage = () => {
   return (
-    <Layout title="Home - FileManager">
+    <Layout title="Home - WriteLibrary">
       <ConnectedLayout>
         <OwnDocs />
         <Explore />

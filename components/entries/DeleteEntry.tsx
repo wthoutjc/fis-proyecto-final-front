@@ -29,7 +29,7 @@ const DeleteEntry = ({ document }: Props) => {
           sx={{ mb: 2 }}
           textAlign="center"
         >
-          FileManager
+          WriteLibrary
         </Typography>
         <Box
           sx={{
@@ -109,7 +109,7 @@ const DeleteEntry = ({ document }: Props) => {
         sx={{ mb: 2 }}
         textAlign="center"
       >
-        FileManager
+        WriteLibrary
       </Typography>
       <Box
         sx={{

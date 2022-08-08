@@ -3,7 +3,7 @@ import { ConnectedLayout, Layout } from "../../components/layout";
 
 const AutoresPage = () => {
   return (
-    <Layout title="Autores - FileManager">
+    <Layout title="Autores - WriteLibrary">
       <ConnectedLayout>
         <Box></Box>
       </ConnectedLayout>

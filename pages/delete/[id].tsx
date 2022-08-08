@@ -13,7 +13,7 @@ interface Props {
 
 const DeleteEntryPage = ({ document }: Props) => {
   return (
-    <Layout title="Delete - FileManager">
+    <Layout title="Delete - WriteLibrary">
       <ConnectedLayout>
         <DeleteEntry document={document} />
       </ConnectedLayout>
