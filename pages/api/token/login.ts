@@ -17,7 +17,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const serialized = serialize("request_token", data.access_token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "production",
         sameSite: "none",
         maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
         path: "/",
