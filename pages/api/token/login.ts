@@ -15,17 +15,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const data = await loginAuth(email, password);
 
-      const serialized = serialize("request_token", data.accessToken, {
-        httpOnly: true,
-        sameSite: "none",
-        maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
-        path: "/",
-      });
+      if (data) {
+        console.log(data.access_token);
+        const serialized = serialize("request_token", data.access_token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          sameSite: "none",
+          maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
+          path: "/",
+        });
 
-      res.setHeader("Set-Cookie", serialized);
-      return res
-        .status(200)
-        .json({ message: "Token añadido satisfactoriamente." });
+        res.setHeader("Set-Cookie", serialized);
+        return res
+          .status(200)
+          .json({ message: "Token añadido satisfactoriamente." });
+      }
+
     default:
       return res.status(405).json({ error: "Método no permitido" });
   }
