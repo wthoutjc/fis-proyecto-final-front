@@ -64,7 +64,7 @@ const ModuleLogged = () => {
   const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state) => state.auth);
-  const { name } = user;
+  const { name } = user!;
 
   const handleLogout = () => {
     dispatch(turnOffRender());
@@ -96,11 +96,10 @@ const Navbar = () => {
   const [clicked, setClicked] = useState(false);
   const dispatch = useAppDispatch();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { logged } = useAppSelector((state) => state.auth);
+
   const { sidebar } = useAppSelector((state) => state.ux);
   const { filter } = useAppSelector((state) => state.filter);
-
-  const { logged } = user;
   const { enabled } = filter;
 
   const turnOffUxRender = () => {

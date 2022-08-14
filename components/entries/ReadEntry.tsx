@@ -10,11 +10,11 @@ import {
 import NextImage from "next/image";
 
 // Component
-import { Card, EditEntry } from "../../components/entries";
-import { ActivityEntry, DetailsEntry } from "./subcomponents";
+import { EditEntry } from "../../components/entries";
+import { DetailsEntry } from "./subcomponents";
 
 // Interfaces
-import { IDocument } from "../../interfaces";
+import { IPublication, IAuthor } from "../../interfaces";
 
 // Icons
 import DetailsIcon from "@mui/icons-material/Details";
@@ -22,10 +22,11 @@ import AddReactionIcon from "@mui/icons-material/AddReaction";
 import EditIcon from "@mui/icons-material/Edit";
 
 interface Props {
-  document: IDocument | null;
+  document: IPublication | null;
+  authors: IAuthor[];
 }
 
-const ReadEntry = ({ document }: Props) => {
+const ReadEntry = ({ document, authors }: Props) => {
   const [value, setValue] = useState<null | string>("detalles");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -38,7 +39,7 @@ const ReadEntry = ({ document }: Props) => {
         <>
           <Box sx={{ p: 2, maxWidth: "70%" }}>
             <Typography variant="h4" fontWeight={600} sx={{ mb: 1 }}>
-              {document.title}
+              {document.name}
             </Typography>
             <Divider sx={{ backgroundColor: "#123", mb: 1 }} />
             <Box
@@ -68,17 +69,6 @@ const ReadEntry = ({ document }: Props) => {
                     }
                   />
                   <BottomNavigationAction
-                    label="Actividad"
-                    value="actividad"
-                    icon={
-                      <>
-                        <Tooltip title="Actividad">
-                          <AddReactionIcon />
-                        </Tooltip>
-                      </>
-                    }
-                  />
-                  <BottomNavigationAction
                     label="Editar"
                     value="editar"
                     icon={
@@ -91,10 +81,10 @@ const ReadEntry = ({ document }: Props) => {
               </Box>
               {value === "detalles" ? (
                 <DetailsEntry document={document} />
-              ) : value === "actividad" ? (
-                <ActivityEntry document={document} />
               ) : (
-                value === "editar" && <EditEntry document={document} />
+                value === "editar" && (
+                  <EditEntry document={document} authors={authors} />
+                )
               )}
             </Box>
           </Box>
@@ -120,16 +110,6 @@ const ReadEntry = ({ document }: Props) => {
               />
             </Box>
           </Box>
-          <Box sx={{ p: 2 }}>
-            <Typography variant="body1" fontWeight={600} sx={{ mb: 4 }}>
-              Quizás te interese:
-            </Typography>
-            <Box display="flex">
-              {DATA.map((document, index) => (
-                <Card key={index} document={document} />
-              ))}
-            </Box>
-          </Box>
         </>
       )}
     </>
@@ -137,58 +117,3 @@ const ReadEntry = ({ document }: Props) => {
 };
 
 export { ReadEntry };
-
-const DATA: IDocument[] = [
-  {
-    id: "1",
-    typeId: "ISBN",
-    title: "Test 1",
-    type: "libro",
-    ownerName: "Pepito 1 Perez",
-    ownerEmail: "pepito@correo.com",
-    lastModifiedName: "Pepito 1 Perez",
-    dateCreated: 12344,
-    dateLastModified: 12344,
-    autors: ["Test"],
-    editorial: "Test 1",
-  },
-  {
-    id: "2",
-    typeId: "ISBN",
-    title: "Test 2",
-    type: "libro",
-    ownerName: "Pepito 2 Perez",
-    ownerEmail: "pepito@correo.com",
-    lastModifiedName: "Pepito 2 Perez",
-    dateCreated: 12344,
-    dateLastModified: 12344,
-    autors: ["Test"],
-    editorial: "Test 2",
-  },
-  {
-    id: "3",
-    typeId: "ISBN",
-    title: "Test 3",
-    type: "libro",
-    ownerName: "Pepito 3 Perez",
-    ownerEmail: "pepito@correo.com",
-    lastModifiedName: "Pepito 3 Perez",
-    dateCreated: 32344,
-    dateLastModified: 32344,
-    autors: ["Test"],
-    editorial: "Test 3",
-  },
-  {
-    id: "4",
-    typeId: "ISBN",
-    title: "Test 4",
-    type: "libro",
-    ownerName: "Pepito 4 Perez",
-    ownerEmail: "pepito@correo.com",
-    lastModifiedName: "Pepito 4 Perez",
-    dateCreated: 42344,
-    dateLastModified: 42344,
-    autors: ["Test"],
-    editorial: "Test 4",
-  },
-];

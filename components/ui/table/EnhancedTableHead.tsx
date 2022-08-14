@@ -10,7 +10,7 @@ import { visuallyHidden } from "@mui/utils";
 import React from "react";
 
 // Interface
-import { IDocument } from "../../../interfaces";
+import { IPublication } from "../../../interfaces";
 
 type Order = "asc" | "desc";
 
@@ -18,7 +18,7 @@ interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof IDocument
+    property: keyof IPublication
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -28,24 +28,24 @@ interface EnhancedTableProps {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof IDocument;
+  id: keyof IPublication;
   label: string;
   numeric: boolean;
 }
 
 const headHomeCells: readonly HeadCell[] = [
-  { id: "title", numeric: true, disablePadding: false, label: "Título" },
+  { id: "name", numeric: true, disablePadding: false, label: "Título" },
   {
-    id: "ownerName",
+    id: "stock",
     numeric: true,
     disablePadding: false,
-    label: "Propietario",
+    label: "Stock",
   },
   {
-    id: "dateLastModified",
+    id: "createdAt",
     numeric: false,
     disablePadding: true,
-    label: "Última modificación",
+    label: "Creado",
   },
 ];
 
@@ -60,7 +60,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   } = props;
 
   const createSortHandler =
-    (property: keyof IDocument) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof IPublication) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 

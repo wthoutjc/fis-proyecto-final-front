@@ -20,10 +20,11 @@ interface Props {
   anchorEl: null | HTMLElement;
   to: string;
   deleteTo: string;
+  loanTo: string;
   handleClose: () => void;
 }
 
-const Menu = ({ open, anchorEl, to, deleteTo, handleClose }: Props) => {
+const Menu = ({ open, anchorEl, to, deleteTo, loanTo, handleClose }: Props) => {
   const router = useRouter();
 
   const handleTo = () => {
@@ -33,6 +34,10 @@ const Menu = ({ open, anchorEl, to, deleteTo, handleClose }: Props) => {
   const handleDeleteTo = () => {
     router.push(deleteTo);
   };
+
+  const handleLoanTo = () => {
+    router.push(loanTo);
+  }
 
   return (
     <Paper sx={{ width: 320, maxWidth: "100%", position: "absolute" }}>
@@ -68,7 +73,7 @@ const Menu = ({ open, anchorEl, to, deleteTo, handleClose }: Props) => {
             </ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem>
+          <MenuItem onClick={handleLoanTo}>
             <ListItemIcon>
               <BookIcon fontSize="small" />
             </ListItemIcon>

@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -16,51 +15,76 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // Redux
 import { useAppSelector } from "../../hooks";
 
 // Icons
 import DescriptionIcon from "@mui/icons-material/Description";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+
+// Interfaces
+import { IAuthor } from "../../interfaces";
+import { useState } from "react";
 
 interface RegisterDocument {
-  title: string;
-  date: number;
-  autores: string[];
-  type: string;
-  editorial: string;
+  name: string;
+  description: string;
+  type: "book" | "paper" | "article";
+  idISBN: string | null;
+  idSSN: string | null;
+  file: FileList | null;
+  authorId: number | null;
 }
 
-const AUTORES = [
-  { name: "Oliver Hansen" },
-  { name: "Van Henry" },
-  { name: "April Tucker" },
-  { name: "Ralph Hubbard" },
-  { name: "Omar Alexander" },
-  { name: "Carlos Abbott" },
-  { name: "Miriam Wagner" },
-  { name: "Bradley Wilkerson" },
-  { name: "Virginia Andrews" },
-  { name: "Kelly Snyder" },
-];
+interface Props {
+  authors: IAuthor[];
+}
 
-const NewEntry = () => {
+const NewEntry = ({ authors }: Props) => {
+  const [typeFile, setTypeFile] = useState("libro");
+  const [loading, setLoading] = useState(false);
+
+  const { accessToken } = useAppSelector((state) => state.auth);
+
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterDocument>();
 
-  const { user } = useAppSelector((state) => state.auth);
-  const { name } = user;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTypeFile(event.target.value);
+  };
 
-  const handleNewDocument = (registerDocument: RegisterDocument) => {
-    console.log(registerDocument);
+  const handleNewDocument = async (registerDocument: RegisterDocument) => {
+    setLoading(true);
+    const data = new FormData();
+    data.append("name", registerDocument.name);
+    data.append("description", registerDocument.description);
+    data.append("type", registerDocument.type);
+
+    if (registerDocument.file) data.append("file", registerDocument.file[0]);
+    if (registerDocument.idISBN) data.append("idISBN", registerDocument.idISBN);
+    if (registerDocument.idSSN) data.append("idSSN", registerDocument.idSSN);
+    if (registerDocument.authorId)
+      data.append("authorId", String(registerDocument.authorId));
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/publications`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: data,
+      }
+    );
+    if (response) setLoading(false);
+    const result = await response.json();
   };
 
   return (
@@ -68,37 +92,23 @@ const NewEntry = () => {
       <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
         Nuevo documento
       </Typography>
-      <ul style={{ marginLeft: 20 }}>
-        <li>
-          <Typography variant="body2" fontWeight={400} sx={{ mb: 2 }}>
-            {name}, acá podrás crear un nuevo documento, para ello, solo es
-            obligatorio poner el título del documento, luego de eso podrás
-            añadirlo a tu libreria donde otros podrán verlo y modificarlo.
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body2" fontWeight={400} sx={{ mb: 2 }}>
-            Sólo tú puedes borrar los documentos que creas.
-          </Typography>
-        </li>
-      </ul>
       <form onSubmit={handleSubmit(handleNewDocument)}>
         <Box sx={{ backgroundColor: "#222f3e", p: 3, borderRadius: 2 }}>
           <TextField
             fullWidth
             type="text"
-            autoComplete="title"
+            autoComplete="name"
             sx={{ marginBottom: "1em" }}
-            placeholder="Título"
-            label="Título"
-            error={!!errors.title}
+            placeholder="Nombre"
+            label="Nombre *"
+            error={!!errors.name}
             helperText={
-              !!errors.title
-                ? errors.title.message
-                : "Escribe el título del documento"
+              !!errors.name
+                ? errors.name.message
+                : "Escribe el nombre del documento"
             }
-            {...register("title", {
-              required: "El título es un campo requerido",
+            {...register("name", {
+              required: "El nombre es un campo requerido",
             })}
             InputProps={{
               startAdornment: (
@@ -110,22 +120,26 @@ const NewEntry = () => {
           />
           <TextField
             fullWidth
-            type="date"
-            autoComplete="Fecha de publicación"
+            type="text"
+            autoComplete="description"
             sx={{ marginBottom: "1em" }}
-            placeholder="Fecha de publicación"
-            label="Fecha de publicación"
-            error={!!errors.date}
+            placeholder="Descripción"
+            label="Descripción *"
+            error={!!errors.name}
+            multiline
+            rows={3}
             helperText={
-              !!errors.date
-                ? errors.date.message
-                : "Selecciona la fecha de publicación del documento"
+              !!errors.description
+                ? errors.description.message
+                : "Escribe la descripción del documento"
             }
-            {...register("date")}
+            {...register("description", {
+              required: "La descripción es un campo requerido",
+            })}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <CalendarMonthIcon />
+                  <DescriptionIcon />
                 </InputAdornment>
               ),
             }}
@@ -135,83 +149,62 @@ const NewEntry = () => {
             justifyContent={"space-between"}
             alignItems={"flex-start"}
           >
-            <Controller
-              control={control}
-              name="autores"
-              defaultValue={[]}
-              render={({ field }) => (
-                <FormControl sx={{ width: "70%", marginBottom: "1em" }}>
-                  <InputLabel id="autores-label">Autor(es)</InputLabel>
-                  <Select
-                    {...field}
-                    labelId="autores-label"
-                    id="autores-label"
-                    value={field.value}
-                    label="Autor(es)"
-                    multiple
-                    defaultValue={[]}
-                    renderValue={(selected) => selected.join(", ")}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <PeopleAltIcon />
-                      </InputAdornment>
-                    }
-                  >
-                    {AUTORES.map((autor, i) => (
-                      <MenuItem key={i} value={autor.name}>
-                        <Checkbox
-                          checked={field.value.indexOf(autor.name) >= 0}
-                        />
-                        <ListItemText primary={autor.name} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>
-                    Seleccione uno o varios autores
-                  </FormHelperText>
-                </FormControl>
-              )}
-            />
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ ml: 1 }}
-              endIcon={<PeopleAltIcon />}
-            >
-              Gestionar autores
-            </Button>
+            <FormControl sx={{ width: "70%", marginBottom: "1em" }}>
+              <InputLabel id="autores-label">Autor</InputLabel>
+              <Select
+                labelId="autores-label"
+                id="autores-label"
+                label="Autor"
+                defaultValue={""}
+                {...register("authorId")}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <PeopleAltIcon />
+                  </InputAdornment>
+                }
+              >
+                {authors.map((author, i) => (
+                  <MenuItem key={i} value={author.id}>
+                    <ListItemText primary={author.name} />
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>Seleccione el autor</FormHelperText>
+            </FormControl>
           </Box>
           <Box display="flex" justifyContent={"space-between"} sx={{ mb: 2 }}>
             <FormControl>
-              <FormLabel id="tipo-doc">Tipo de documento</FormLabel>
+              <FormLabel id="tipo-doc">Tipo de documento *</FormLabel>
               <RadioGroup
                 aria-labelledby="tipo-doc"
                 defaultValue="libro"
                 name="tipo-libro"
+                onChange={handleChange}
               >
                 <FormControlLabel
                   sx={{ color: "white" }}
-                  value="libro"
+                  value="book"
                   {...register("type")}
                   control={<Radio />}
                   label="Libro"
                 />
                 <FormControlLabel
                   sx={{ color: "white" }}
-                  value="ponencia"
+                  value="paper"
                   {...register("type")}
                   control={<Radio />}
                   label="Ponencia"
                 />
                 <FormControlLabel
                   sx={{ color: "white" }}
-                  value="artículo científico"
+                  value="article"
                   {...register("type")}
                   control={<Radio />}
                   label="Artículo científico"
                 />
               </RadioGroup>
             </FormControl>
+
             <Box sx={{ color: "white", width: "50%" }}>
               <Typography
                 variant="body2"
@@ -223,23 +216,8 @@ const NewEntry = () => {
               >
                 Nota:{" "}
                 <i>
-                  los documentos de tipo ponencia y artículo científico tendrán
-                  un campo adicional para la revista o conferencia en la que
-                  fueron publicados.
-                </i>
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                textAlign={"justify"}
-                fontWeight={200}
-                fontSize={12}
-              >
-                Nota:{" "}
-                <i>
-                  los documentos de tipo ponencia y artículo científico tendrán
-                  un campo adicional para la revista o conferencia en la que
-                  fueron publicados.
+                  los documentos de tipo artículo científico tendrán
+                  un código diferente al de los libros y ponencias.
                 </i>
               </Typography>
             </Box>
@@ -247,27 +225,56 @@ const NewEntry = () => {
           <TextField
             fullWidth
             type="text"
-            autoComplete="editorial"
+            autoComplete={typeFile === "article" ? "SSN" : "ISBN"}
             sx={{ marginBottom: "1em" }}
-            placeholder="Editorial"
-            label="Editorial"
-            error={!!errors.editorial}
+            placeholder={typeFile === "article" ? "Código SSN" : " Código ISBN"}
+            label={typeFile === "article" ? "Código SSN" : " Código ISBN"}
+            error={!!errors.type}
             helperText={
-              !!errors.editorial
-                ? errors.editorial.message
-                : "Escribe el nombre de la editorial"
+              !!errors.type
+                ? errors.type.message
+                : `Escribe el ${
+                    typeFile === "article" ? "código SSN" : " código ISBN"
+                  } del documento`
             }
-            {...register("editorial")}
+            {...register(`${typeFile === "article" ? "idSSN" : "idISBN"}`)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountBalanceIcon />
+                  <QrCodeIcon />
                 </InputAdornment>
               ),
             }}
           />
-          <Button type="submit" fullWidth color="success" variant="contained">
-            Añadir
+          <TextField
+            fullWidth
+            type="file"
+            hidden
+            autoComplete="file"
+            sx={{ marginBottom: "1em" }}
+            placeholder="Archivo"
+            label="Archivo"
+            error={!!errors.file}
+            helperText={
+              !!errors.file ? errors.file.message : "Selecciona tu archivo"
+            }
+            {...register("file")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AttachFileIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Button
+            disabled={loading}
+            type="submit"
+            fullWidth
+            color="success"
+            variant="contained"
+          >
+            {loading ? "Cargando..." : "Añadir"}
           </Button>
         </Box>
       </form>

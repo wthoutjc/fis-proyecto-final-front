@@ -7,9 +7,7 @@ import { Navbar } from "../ui";
 
 // Redux
 import { useAppDispatch } from "../../hooks";
-import { login } from "../../reducers";
-
-import { IAuth } from "../../interfaces";
+import { login, setAccessToken, setUser } from "../../reducers";
 
 // Interface - Enum - Types
 import { StatusAuth } from "../../enum";
@@ -24,12 +22,18 @@ interface Props {
 
 const Layout = ({ title = "WriteLibrary", children }: Props) => {
   const { data, status } = useSession();
-  
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (status === StatusAuth.authenticated) {
-      dispatch(login(data?.user as IAuth));
+      dispatch(login());
+      if (data) {
+        const { accessToken, user } = data;
+
+        dispatch(setAccessToken(accessToken as any));
+        dispatch(setUser(user as any));
+      }
     }
   }, [status, data, dispatch]);
 

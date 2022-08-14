@@ -1,22 +1,23 @@
 import { Box, Grid, Typography, capitalize, Button } from "@mui/material";
-import { IDocument } from "../../../interfaces";
+import { IPublication } from "../../../interfaces";
 
 interface Props {
-  document: IDocument;
+  document: IPublication;
 }
 
 const DetailsEntry = ({ document }: Props) => {
   const {
     id,
-    typeId,
-    title,
-    ownerName,
+    name,
+    description,
+    archivied,
+    createdAt,
+    file,
+    idISBN,
+    idSSN,
+    inPhysical,
+    stock,
     type,
-    dateCreated,
-    dateLastModified,
-    editorial,
-    autors,
-    lastModifiedName,
   } = document;
 
   return (
@@ -29,11 +30,13 @@ const DetailsEntry = ({ document }: Props) => {
       >
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
-            {typeId}:
+            ID:
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{id}</Typography>
+          <Typography variant="body1">
+            {id} - {idISBN || idSSN}{" "}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body1">Propiedades</Typography>
@@ -44,7 +47,15 @@ const DetailsEntry = ({ document }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{title}</Typography>
+          <Typography variant="body1">{name}</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body2" color="text.secondary">
+            Descripción
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">{description}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
@@ -52,7 +63,7 @@ const DetailsEntry = ({ document }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{ownerName}</Typography>
+          <Typography variant="body1">creador</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
@@ -68,38 +79,33 @@ const DetailsEntry = ({ document }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{dateCreated}</Typography>
+          <Typography variant="body1">{createdAt}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
-            Última modificación
+            Archivado
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">
-            {dateLastModified} por {lastModifiedName}
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2" color="text.secondary">
-            Editorial
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1">{editorial}</Typography>
+          <Typography variant="body1">{archivied}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
-            Autor(es)
+            Stock
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">
-            {autors.map((autor) => autor.concat(", "))}
+          <Typography variant="body1">{stock}</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body2" color="text.secondary">
+            Existencia en físico
           </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">{inPhysical ? "Sí" : "No"}</Typography>
         </Grid>
       </Grid>
-      <Button variant="contained">Gestionar autores</Button>
     </Box>
   );
 };

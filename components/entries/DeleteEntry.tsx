@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 
 // Components
-import { IDocument } from "../../interfaces";
+import { IPublication } from "../../interfaces";
 
 // Redux
 import { useAppSelector } from "../../hooks";
@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Card } from "./Card";
 
 interface Props {
-  document: IDocument;
+  document: IPublication;
 }
 
 const DeleteEntry = ({ document }: Props) => {

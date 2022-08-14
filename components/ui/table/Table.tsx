@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-
 import {
   Box,
   Checkbox,
@@ -12,8 +11,14 @@ import {
   TableRow,
 } from "@mui/material";
 
-// Interface
-import { IDocument } from "../../../interfaces";
+interface IPublication {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  stock: number;
+  createdAt: string;
+}
 
 // Components
 import { EnhancedTableToolbar, EnhancedTableHead } from "./";
@@ -42,14 +47,14 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-const CTable = ({ data }: { data: IDocument[] }) => {
+const CTable = ({ data }: { data: IPublication[] }) => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState((page - 1) * limit);
 
   // Order States
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof IDocument>("id");
+  const [orderBy, setOrderBy] = useState<keyof IPublication>("id");
 
   // Selected
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -65,7 +70,7 @@ const CTable = ({ data }: { data: IDocument[] }) => {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof IDocument
+    property: keyof IPublication
   ) => {
     const isAsc = orderBy === property && order == "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -74,7 +79,7 @@ const CTable = ({ data }: { data: IDocument[] }) => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n) => n.id);
+      const newSelecteds = data.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -117,7 +122,10 @@ const CTable = ({ data }: { data: IDocument[] }) => {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected[0]} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          selected={selected[0]}
+        />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -134,13 +142,13 @@ const CTable = ({ data }: { data: IDocument[] }) => {
                 .sort(getComparator(order, orderBy))
                 .slice(page * limit, page * limit + limit)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
+                  const isItemSelected = isSelected(String(row.id));
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      onClick={(event) => handleClick(event, String(row.id))}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -162,11 +170,11 @@ const CTable = ({ data }: { data: IDocument[] }) => {
                         id={labelId}
                         scope="row"
                       >
-                        {row.title}
+                        {row.name}
                       </TableCell>
-                      <TableCell align="center">{row.ownerName}</TableCell>
+                      <TableCell align="center">{row.stock}</TableCell>
                       <TableCell align="center">
-                        <i>{row.dateLastModified}</i> - {row.lastModifiedName}
+                        <i>{row.createdAt}</i>
                       </TableCell>
                     </TableRow>
                   );

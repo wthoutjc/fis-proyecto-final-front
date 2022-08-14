@@ -42,7 +42,7 @@ export default NextAuth({
         if (account) {
           switch (account.type) {
             case "credentials":
-              token.user = user.user;
+              token.user = user;
               break;
           }
         }

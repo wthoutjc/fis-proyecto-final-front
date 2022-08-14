@@ -8,32 +8,31 @@ interface AuthAction {
   payload: IAuth;
 }
 
-interface AuthState {
-  user: IAuth;
+interface TokenAction {
+  payload: string;
 }
 
-const initialState: AuthState = {
-  user: {
-    logged: false,
-    id: "",
-    name: "",
-  },
+const initialState: IAuth = {
+  logged: false,
+  user: null,
+  accessToken: "",
 };
 
 const authSlice = createSlice({
   name: "[AUTH]",
   initialState,
   reducers: {
-    login: (state: AuthState, action: AuthAction) => {
-      state.user = {
-        ...action.payload,
-        logged: true,
-      };
+    login: (state: IAuth) => {
+      state.logged = true;
     },
-    logout: (state: AuthState) => {
-      state.user = {
-        ...initialState.user,
-      };
+    logout: (state: IAuth) => {
+      state.logged = false;
+    },
+    setAccessToken: (state: IAuth, action: TokenAction) => {
+      state.accessToken = action.payload;
+    },
+    setUser: (state: IAuth, action: AuthAction) => {
+      state.user = action.payload.user;
     },
   },
 });
@@ -41,7 +40,7 @@ const authSlice = createSlice({
 export { authSlice };
 
 // Actions
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setAccessToken, setUser } = authSlice.actions;
 
 // Selector to access to the store
 export const selectAuth = (state: AppState) => state.auth;

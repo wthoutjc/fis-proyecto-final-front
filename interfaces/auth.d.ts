@@ -1,5 +1,6 @@
+import { IUser } from "./";
 export interface IAuth {
   logged?: boolean;
-  id: string;
-  name: string;
+  user: IUser | null;
+  accessToken?: string;
 }

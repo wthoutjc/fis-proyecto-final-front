@@ -23,8 +23,6 @@ const signUp = ({ email, name, lastname, password }: Props) => {
       password,
     }),
   }).then((res) => {
-    console.log(res);
-
     if (res.status === 201) {
       loginToken({ email, password });
     }

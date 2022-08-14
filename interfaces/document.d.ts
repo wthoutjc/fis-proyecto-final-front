@@ -1,13 +1,14 @@
-export interface IDocument {
-  id: string;
-  typeId: "ISBN" | "SSN";
-  title: string;
-  type: "libro" | "ponencia" | "artículo científico";
-  ownerName: string;
-  ownerEmail: string;
-  lastModifiedName: string;
-  dateLastModified: number;
-  dateCreated: number;
-  autors: string[];
-  editorial: string;
+export interface IPublication {
+  id: number;
+  name: string;
+  description: string;
+  author: string;
+  type: string;
+  idISBN: string | null;
+  idSSN: string | null;
+  archivied: boolean;
+  inPhysical: boolean;
+  stock: number;
+  file: File | null;
+  createdAt: string;
 }

@@ -15,25 +15,19 @@ import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 
 // Interface
-import { IDocument } from "../../interfaces";
+import { IPublication } from "../../interfaces";
 
 // Icons
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-// Redux
-import { useAppSelector } from "../../hooks";
 
 // Components
 import { Menu } from "../../components/ui/menu";
 
 interface Props {
-  document: IDocument;
+  document: IPublication;
 }
 
 const Card = ({ document }: Props) => {
-  const { user } = useAppSelector((state) => state.auth);
-  const { name } = user;
-
   const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -69,11 +63,7 @@ const Card = ({ document }: Props) => {
     >
       <CardHeader
         sx={{ width: "100%", backgroundColor: "#222f3e" }}
-        // avatar={
-        //   <Avatar sx={{ bgcolor: "#ced6e0" }} aria-label="recipe">
-        //     {name[0]}
-        //   </Avatar>
-        // }
+        avatar={<Avatar sx={{ bgcolor: "#ced6e0" }} aria-label="recipe" />}
         action={
           <>
             <IconButton aria-label="settings" onClick={handleClickListItem}>
@@ -85,23 +75,24 @@ const Card = ({ document }: Props) => {
               anchorEl={anchorEl}
               to={`/document/${document.id}`}
               deleteTo={`/delete/${document.id}`}
+              loanTo={`/loan/${document.id}`}
               handleClose={handleClose}
             />
           </>
         }
-        title={document.title}
-        subheader={document.dateLastModified}
+        title={document.name}
+        subheader={document.createdAt}
       />
       <Divider sx={{ border: "1 solid white", width: "100%" }} />
       <CardMedia
         component="img"
         sx={{ width: 100, p: 2 }}
         image={
-          document.type === "libro"
+          document.type === "book"
             ? "/img/libros.png"
-            : document.type === "artículo científico"
+            : document.type === "article"
             ? "/img/research.png"
-            : document.type === "ponencia"
+            : document.type === "paper"
             ? "/img/documents.png"
             : "/img/book.png"
         }
@@ -109,16 +100,9 @@ const Card = ({ document }: Props) => {
       />
       <Box sx={{ width: "100%", height: "100%", p: 0 }}>
         <CardContent sx={{ paddingBottom: "3px !important" }}>
-          {document.autors.map((autor, i) => (
-            <Typography
-              key={i}
-              variant="body2"
-              color="text.secondary"
-              sx={{ mb: 1 }}
-            >
-              <i>{autor}</i>
-            </Typography>
-          ))}
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <b>Stock:</b> {document.stock}
+          </Typography>
         </CardContent>
       </Box>
       <Divider sx={{ border: "1 solid white", width: "100%" }} />

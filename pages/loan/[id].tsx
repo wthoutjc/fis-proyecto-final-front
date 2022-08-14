@@ -2,19 +2,18 @@ import { GetServerSideProps } from "next";
 import { ConnectedLayout, Layout } from "../../components/layout";
 
 // Components
-import { ReadEntry } from "../../components/entries";
+import { CreateLoan } from "../../components/loan";
 import { IPublication, IAuthor } from "../../interfaces";
 
 interface Props {
   document: IPublication;
-  authors: IAuthor[];
 }
 
-const EntryPage = ({ document, authors }: Props) => {
+const LoanPage = ({ document }: Props) => {
   return (
     <Layout title="Document">
       <ConnectedLayout>
-        <ReadEntry document={document} authors={authors} />
+        <CreateLoan document={document} />
       </ConnectedLayout>
     </Layout>
   );
@@ -37,13 +36,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     });
     const document = await response.json();
 
-    const response_ = await fetch(`${process.env.API_URl}/authors`);
-    const authors = await response_.json();
-
     return {
       props: {
         document,
-        authors,
       },
     };
   } catch (error) {
@@ -56,4 +51,4 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 };
 
-export default EntryPage;
+export default LoanPage;

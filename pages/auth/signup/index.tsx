@@ -61,16 +61,7 @@ const SignUpPage = () => {
   }, [clicked, dispatch]);
 
   const handleSignUp = async (registerInfo: RegisterInfo) => {
-    const { email, password } = registerInfo;
-
     signUp(registerInfo);
-    // const payload: INotification = {
-    //   id: uuid(),
-    //   title: "Error:",
-    //   message: "Falló el registro",
-    //   severity: "error",
-    // };
-    // dispatch(newNotification(payload));
   };
 
   return (
@@ -211,7 +202,7 @@ const SignUpPage = () => {
                   }}
                 />
                 <Button type="submit" variant="contained" fullWidth>
-                  RESGISTRARME
+                  RESGISTRARSE
                 </Button>
               </Box>
             </Box>
