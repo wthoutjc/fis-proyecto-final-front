@@ -14,8 +14,6 @@ import {
 interface IPublication {
   id: number;
   name: string;
-  description: string;
-  type: string;
   stock: number;
   createdAt: string;
 }
@@ -165,7 +163,7 @@ const CTable = ({ data }: { data: IPublication[] }) => {
                         />
                       </TableCell>
                       <TableCell
-                        align="center"
+                        align="left"
                         component="th"
                         id={labelId}
                         scope="row"

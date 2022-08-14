@@ -9,8 +9,12 @@ import {
 import { visuallyHidden } from "@mui/utils";
 import React from "react";
 
-// Interface
-import { IPublication } from "../../../interfaces";
+interface IPublication {
+  id: number;
+  name: string;
+  stock: number;
+  createdAt: string;
+}
 
 type Order = "asc" | "desc";
 
