@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const data = await loginAuth(email, password);
 
-      const serialized = serialize("request_token", data.access_token, {
+      const serialized = serialize("request_token", data.accessToken, {
         httpOnly: true,
         sameSite: "none",
         maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month
