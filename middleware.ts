@@ -1,11 +1,7 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
-  console.log(req.nextUrl.pathname);
-
-  const token =
-    req.cookies.get("__Secure-next-auth.session-token") ||
-    req.cookies.get("next-auth.session-token");
+  const token = req.cookies.get("request_token");
 
   if (req.nextUrl.pathname === "/") {
     if (token) {
@@ -13,7 +9,6 @@ const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
       url.pathname = "/home";
       return NextResponse.redirect(url);
     }
-
     return NextResponse.next();
   }
 
@@ -23,7 +18,6 @@ const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
       url.pathname = "/home";
       return NextResponse.redirect(url);
     }
-
     return NextResponse.next();
   }
 

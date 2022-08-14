@@ -5,14 +5,9 @@ import {
   Button,
   InputAdornment,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { AuthLayout, Layout } from "../../../components/layout";
-
-// API - Next
-import { signInAuth } from "../../../auth";
-import { getProviders, signIn } from "next-auth/react";
 
 // Redux
 import { useAppSelector, useAppDispatch } from "../../../hooks";
@@ -34,9 +29,13 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import { INotification } from "../../../interfaces";
 import { validations } from "../../../utils";
 
+// Register - ACTION
+import { signUp } from "../../../actions";
+
 interface RegisterInfo {
   email: string;
   name: string;
+  lastname: string;
   password: string;
   password2: string;
 }
@@ -62,19 +61,16 @@ const SignUpPage = () => {
   }, [clicked, dispatch]);
 
   const handleSignUp = async (registerInfo: RegisterInfo) => {
-    const { hasError, message } = await signInAuth({ ...registerInfo });
-    if (hasError) {
-      const payload: INotification = {
-        id: uuid(),
-        title: "Error:",
-        message: message!,
-        severity: "error",
-      };
-      dispatch(newNotification(payload));
-      return;
-    }
     const { email, password } = registerInfo;
-    await signIn("credentials", { email, password });
+
+    signUp(registerInfo);
+    // const payload: INotification = {
+    //   id: uuid(),
+    //   title: "Error:",
+    //   message: "Falló el registro",
+    //   severity: "error",
+    // };
+    // dispatch(newNotification(payload));
   };
 
   return (
@@ -107,7 +103,7 @@ const SignUpPage = () => {
                       : "Escribe tu e-mail..."
                   }
                   {...register("email", {
-                    required: "E-mail is required",
+                    required: "E-mail es requerido",
                     validate: (val) => validations.isEmail(val),
                   })}
                   InputProps={{
@@ -129,7 +125,30 @@ const SignUpPage = () => {
                     !!errors.name ? errors.name.message : "Escribe tu nombre..."
                   }
                   {...register("name", {
-                    required: "Name is required",
+                    required: "Name es requerido",
+                  })}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PersonIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  autoComplete="lastname"
+                  sx={{ marginBottom: "1em" }}
+                  placeholder="Apellido"
+                  label="Apellido"
+                  error={!!errors.lastname}
+                  helperText={
+                    !!errors.lastname
+                      ? errors.lastname.message
+                      : "Escribe tu apellido..."
+                  }
+                  {...register("lastname", {
+                    required: "Apellido es requerido",
                   })}
                   InputProps={{
                     startAdornment: (
@@ -153,7 +172,7 @@ const SignUpPage = () => {
                       : "Escribe tu password..."
                   }
                   {...register("password", {
-                    required: "Password is required",
+                    required: "Password es requerido",
                     minLength: {
                       value: 6,
                       message: "Password must be at least 6 characters",
@@ -181,7 +200,7 @@ const SignUpPage = () => {
                       : "Confirma tu contraseña..."
                   }
                   {...register("password2", {
-                    required: "This field is required",
+                    required: "This field es requerido",
                   })}
                   InputProps={{
                     startAdornment: (

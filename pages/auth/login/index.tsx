@@ -14,7 +14,7 @@ import {
 
 // Redux
 import { useAppSelector, useAppDispatch } from "../../../hooks";
-import { incrementClicks } from "../../../reducers";
+import { incrementClicks, login } from "../../../reducers";
 
 // Components
 // UI
@@ -22,17 +22,16 @@ import { ActiveLink } from "../../../components/ui";
 import { Layout, AuthLayout } from "../../../components/layout";
 
 // Icons
-
 import PasswordIcon from "@mui/icons-material/Password";
 import EmailIcon from "@mui/icons-material/Email";
 import NextLink from "next/link";
 
-// Next Auth
-import { signIn } from "next-auth/react";
-
 // React Hook Form
 import { useForm } from "react-hook-form";
 import { validations } from "../../../utils";
+
+// Auth
+import { loginToken } from "../../../actions";
 
 interface LoginInfo {
   email: string;
@@ -57,9 +56,8 @@ const LogInPage = () => {
 
   const onLoginUser = async ({ email, password }: LoginInfo) => {
     setShowError(false);
-
     try {
-      await signIn("credentials", { email, password });
+      loginToken({ email, password });
     } catch (error) {
       setShowError(true);
       setTimeout(() => {
@@ -77,7 +75,7 @@ const LogInPage = () => {
   return (
     <Layout title={"App - Login"}>
       <AuthLayout>
-        <form onSubmit={handleSubmit(onLoginUser)}>
+        <form onSubmit={handleSubmit(onLoginUser)} style={{ width: "100%" }}>
           <Box className="login__container">
             <Box
               className={

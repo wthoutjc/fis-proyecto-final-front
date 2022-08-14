@@ -69,11 +69,11 @@ const Card = ({ document }: Props) => {
     >
       <CardHeader
         sx={{ width: "100%", backgroundColor: "#222f3e" }}
-        avatar={
-          <Avatar sx={{ bgcolor: "#ced6e0" }} aria-label="recipe">
-            {name[0]}
-          </Avatar>
-        }
+        // avatar={
+        //   <Avatar sx={{ bgcolor: "#ced6e0" }} aria-label="recipe">
+        //     {name[0]}
+        //   </Avatar>
+        // }
         action={
           <>
             <IconButton aria-label="settings" onClick={handleClickListItem}>

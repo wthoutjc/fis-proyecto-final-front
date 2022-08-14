@@ -11,11 +11,11 @@ import { login } from "../../reducers";
 
 import { IAuth } from "../../interfaces";
 
-// NextAuth
-import { useSession } from "next-auth/react";
-
 // Interface - Enum - Types
 import { StatusAuth } from "../../enum";
+
+// NextAuth
+import { useSession } from "next-auth/react";
 
 interface Props {
   title?: string;
@@ -24,7 +24,7 @@ interface Props {
 
 const Layout = ({ title = "WriteLibrary", children }: Props) => {
   const { data, status } = useSession();
-
+  
   const dispatch = useAppDispatch();
 
   useEffect(() => {

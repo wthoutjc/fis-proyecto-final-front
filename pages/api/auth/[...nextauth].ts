@@ -3,6 +3,9 @@ import NextAuth from "next-auth";
 // Providers
 import Credentials from "next-auth/providers/credentials";
 
+// Auth - Back
+import { loginAuth } from "../../../auth";
+
 export default NextAuth({
   providers: [
     Credentials({
@@ -22,11 +25,7 @@ export default NextAuth({
         },
       },
       async authorize(credentials) {
-        //TODO: 'Adaptar este modulo a los requerimientos del proyecto'
-        //return dbusers.checkUserEmailPassword(credentials!.email, credentials!.passowrd)
-        return {
-          name: "Pepito 1 Perez",
-        };
+        return await loginAuth(credentials!.email, credentials!.password);
       },
     }),
   ],
@@ -34,26 +33,23 @@ export default NextAuth({
     signIn: "/auth/login",
     newUser: "/auth/signup",
   },
-  session: {
-    strategy: "jwt",
-    maxAge: 86400,
-    updateAge: 17280,
-  },
+
   callbacks: {
     async jwt({ token, account, user }) {
-      // Verify credentials
-      if (account) {
-        token.accessToken = account.access_token;
+      if (user) {
+        token.accessToken = user.access_token; // USER contiene los datos que devuelve - await authorize() -
 
-        switch (account.type) {
-          case "credentials":
-            token.user = user;
-            break;
+        if (account) {
+          switch (account.type) {
+            case "credentials":
+              token.user = user.user;
+              break;
+          }
         }
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user = token.user as any;
 

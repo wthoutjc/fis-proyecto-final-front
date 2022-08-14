@@ -35,8 +35,8 @@ import {
 // UI
 import { ActiveLink, Search, SettingsSearch } from "./";
 
-// NextAuth
-import { signOut } from "next-auth/react";
+// Auth
+import { logoutToken } from "../../actions";
 
 interface ModuleAuthProps {
   setClicked: (boolean: boolean) => void;
@@ -69,7 +69,7 @@ const ModuleLogged = () => {
   const handleLogout = () => {
     dispatch(turnOffRender());
     dispatch(logout());
-    signOut();
+    logoutToken();
   };
 
   return (
