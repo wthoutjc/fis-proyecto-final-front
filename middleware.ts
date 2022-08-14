@@ -1,7 +1,7 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
-  const token = req.cookies.get("request_token");
+  const token = req.cookies["request_token"];
 
   if (req.nextUrl.pathname === "/") {
     if (token) {
