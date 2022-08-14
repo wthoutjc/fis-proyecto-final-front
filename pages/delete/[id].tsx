@@ -5,10 +5,10 @@ import { ConnectedLayout, Layout } from "../../components/layout";
 import { DeleteEntry } from "../../components/entries";
 
 // Interfaces
-import { IDocument } from "../../interfaces";
+import { IPublication } from "../../interfaces";
 
 interface Props {
-  document: IDocument;
+  document: IPublication;
 }
 
 const DeleteEntryPage = ({ document }: Props) => {
@@ -21,12 +21,23 @@ const DeleteEntryPage = ({ document }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const { id } = params as { id: string };
 
+  const token = req.cookies["request_token"];
+
   try {
-    const response = await fetch(`${process.env.HOST_NAME}/api/data/${id}`);
+    const response = await fetch(`${process.env.API_URL}/publications/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const document = await response.json();
+
+    console.log(document);
 
     return {
       props: {

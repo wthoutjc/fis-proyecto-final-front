@@ -3,20 +3,38 @@ import { Box, Button, Typography } from "@mui/material";
 // Components
 import { IPublication } from "../../interfaces";
 
-// Redux
-import { useAppSelector } from "../../hooks";
 import Image from "next/image";
 import { Card } from "./Card";
+import { useState } from "react";
+
+// Redux
+import { useAppSelector } from "../../hooks";
 
 interface Props {
   document: IPublication;
 }
 
 const DeleteEntry = ({ document }: Props) => {
-  const { user } = useAppSelector((state) => state.auth);
-  const { name } = user;
+  const [accessToDelete, setAccessToDelete] = useState(true);
 
-  if (name === document.ownerName) {
+  const { accessToken } = useAppSelector((state) => state.auth);
+
+  const handleDelete = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/publications/${document.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+  };
+
+  if (accessToDelete) {
     return (
       <Box
         sx={{
@@ -70,7 +88,7 @@ const DeleteEntry = ({ document }: Props) => {
             >
               Los cambios no se podrán revertir.
             </Typography>
-            <Button color="error" variant="contained">
+            <Button onClick={handleDelete} color="error" variant="contained">
               ELIMINAR
             </Button>
           </Box>
@@ -132,7 +150,7 @@ const DeleteEntry = ({ document }: Props) => {
         </Box>
         <Box>
           <Typography sx={{ color: "white", mb: 1 }} variant="h5">
-            {document.ownerName} tiene el control de este documento
+            No tienes el control sobre este documento
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
             Para poder eliminar este documento, debes ser propietario del mismo.

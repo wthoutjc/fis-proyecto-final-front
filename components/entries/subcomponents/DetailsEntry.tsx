@@ -87,7 +87,7 @@ const DetailsEntry = ({ document }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{archivied}</Typography>
+          <Typography variant="body1">{archivied ? "Si" : "No"}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
