@@ -1,9 +1,14 @@
 import { Box, Typography } from "@mui/material";
+import { IPublication } from "../../interfaces";
 
 // Component
 import { Card } from "../entries";
 
-const RecentlyCreated = () => {
+interface Props {
+  publications: IPublication[];
+}
+
+const RecentlyCreated = ({ publications }: Props) => {
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
@@ -15,9 +20,9 @@ const RecentlyCreated = () => {
         sx={{ maxHeight: "750px", overflow: "auto" }}
       >
         En construcción
-        {/* {DATA.map((document, i) => (
+        {publications.map((document, i) => (
           <Card key={i} document={document} />
-        ))} */}
+        ))}
       </Box>
     </Box>
   );

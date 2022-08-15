@@ -15,10 +15,10 @@ interface FilterState {
 const initialState: FilterState = {
   filter: {
     enabled: false,
-    filters: ["autor", "título", "editorial"],
+    filters: ["autor", "creador"],
     dateFilter: false,
     ownDocsFilter: false,
-    currentFilter: "título",
+    currentFilter: "autor",
   },
 };
 

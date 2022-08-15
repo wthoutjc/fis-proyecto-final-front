@@ -28,6 +28,8 @@ interface Props {
 }
 
 const Card = ({ document }: Props) => {
+  console.log(document);
+  
   const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -90,11 +92,11 @@ const Card = ({ document }: Props) => {
         image={
           document.type === "book"
             ? "/img/libros.png"
-            : document.type === "article"
+            : document.type === "articles"
             ? "/img/research.png"
             : document.type === "paper"
-            ? "/img/documents.png"
-            : "/img/book.png"
+            ? "/img/research.png"
+            : "/img/documents.png"
         }
         alt="a"
       />

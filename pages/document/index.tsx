@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import { Box, Chip, capitalize, Typography } from "@mui/material";
 import { ConnectedLayout, Layout } from "../../components/layout";
 
@@ -17,16 +18,23 @@ import { CTable } from "../../components/ui/table";
 
 // Interfaces
 import { IPublication } from "../../interfaces";
+import { useEffect, useState } from "react";
 
-const DocumentPage = () => {
+interface Props {
+  publications: IPublication[];
+}
+
+const DocumentPage = ({ publications }: Props) => {
   const dispatch = useAppDispatch();
+
+  const [data, setData] = useState<IPublication[]>([]);
 
   const { filter } = useAppSelector((state) => state.filter);
   const { currentFilter, dateFilter, ownDocsFilter } = filter;
 
-  const handleDelete = () => {
-    console.log("handleDelete");
-  };
+  useEffect(() => {
+    setData(publications);
+  }, [publications]);
 
   return (
     <Layout title="Document - WriteLibrary">
@@ -96,12 +104,66 @@ const DocumentPage = () => {
             Documentos
           </Typography>
           <Box>
-            <CTable data={[]} />
+            <CTable data={data || []} />
           </Box>
         </Box>
       </ConnectedLayout>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  try {
+    let publications;
+
+    const token = req.cookies["request_token"];
+
+    const response = await fetch(`${process.env.API_URL}/publications`);
+    publications = await response.json();
+
+    if (query.autor) {
+      const response = await fetch(
+        `${process.env.API_URL}/publications/author/${query.autor}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      publications = await response.json();
+    }
+
+    if (query.creador) {
+      const response = await fetch(
+        `${process.env.API_URL}/publications/creator/${query.creador}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      publications = await response.json();
+    }
+
+    console.log(publications);
+
+    return {
+      props: {
+        publications,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        publications: [],
+      },
+    };
+  }
 };
 
 export default DocumentPage;

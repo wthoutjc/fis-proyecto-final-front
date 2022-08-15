@@ -6,19 +6,20 @@ import { NewEntry, RecentlyCreated } from "../../components/entries";
 import { Box } from "@mui/material";
 
 // Interface
-import { IAuthor } from "../../interfaces";
+import { IAuthor, IPublication } from "../../interfaces";
 
 interface Props {
   authors: IAuthor[];
+  publications: IPublication[];
 }
 
-const NewDocumentPage = ({ authors }: Props) => {
+const NewDocumentPage = ({ authors, publications }: Props) => {
   return (
     <Layout title="New Document - WriteLibraryr">
       <ConnectedLayout>
         <Box display="flex">
           <NewEntry authors={authors} />
-          <RecentlyCreated />
+          <RecentlyCreated publications={publications} />
         </Box>
       </ConnectedLayout>
     </Layout>
@@ -30,15 +31,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = await fetch(`${process.env.API_URl}/authors`);
     const authors = await response.json();
 
+    const response_ = await fetch(`${process.env.API_URl}/publications`);
+    const publications = await response_.json();
+
     return {
       props: {
         authors,
+        publications,
       },
     };
   } catch (error) {
     return {
       props: {
         authors: [],
+        publications: [],
       },
     };
   }

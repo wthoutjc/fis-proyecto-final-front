@@ -3,6 +3,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BookRoundedIcon from '@mui/icons-material/BookRounded';
+import FolderDeleteRoundedIcon from '@mui/icons-material/FolderDeleteRounded';
 
 //Interfaces
 import { SideBarData } from "../interfaces";
@@ -27,6 +28,11 @@ const UserSidebar: SideBarData[] = [
     to: "/autores",
     title: "Autores",
     Icon: <PeopleAltIcon />,
+  },
+  {
+    to: "/archivados",
+    title: "Archivados",
+    Icon: <FolderDeleteRoundedIcon />,
   },
 ];
 

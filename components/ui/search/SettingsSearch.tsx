@@ -68,12 +68,12 @@ const SettingsSearch = () => {
       ref={settingSearchRef}
       sx={{
         position: "absolute",
-        top: 230,
-        left: -10,
+        top: 155,
+        left: -20,
         right: 0,
         bottom: 0,
         width: "500px",
-        height: "350px",
+        height: "200px",
         margin: "auto",
         p: 2,
         zIndex: 1,
@@ -133,78 +133,6 @@ const SettingsSearch = () => {
               </MenuItem>
             ))}
           </TextField>
-        </Box>
-        <Box display="flex" alignItems={"flex-end"}>
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            Fecha
-          </Typography>
-          <Tooltip title="Activar fecha">
-            <Checkbox
-              checked={filter.dateFilter}
-              onChange={() => {
-                dispatch(
-                  setDateFilter({
-                    ...filter,
-                    dateFilter: !filter.dateFilter,
-                  })
-                );
-              }}
-              size="small"
-              inputProps={{ "aria-label": "controlled" }}
-            />
-          </Tooltip>
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <TextField
-              disabled={!filter.dateFilter}
-              sx={{ width: "45%" }}
-              size="small"
-              id="outlined-select-currency"
-              type={"date"}
-              helperText="Selecciona la fecha inicial"
-            />
-            <TextField
-              disabled={!filter.dateFilter}
-              sx={{ width: "45%" }}
-              size="small"
-              id="outlined-select-currency"
-              type={"date"}
-              helperText="Selecciona la fecha inicial"
-            />
-          </Box>
-        </Box>
-        <Box display="flex" alignItems={"flex-end"}>
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            Solo documentos propios
-          </Typography>
-          <Tooltip title="Activar solo doc. propios">
-            <Checkbox
-              checked={filter.ownDocsFilter}
-              onChange={() => {
-                dispatch(
-                  setOwnDocsFilter({
-                    ...filter,
-                    ownDocsFilter: !filter.ownDocsFilter,
-                  })
-                );
-              }}
-              size="small"
-              inputProps={{ "aria-label": "controlled" }}
-            />
-          </Tooltip>
         </Box>
       </Stack>
     </Box>
