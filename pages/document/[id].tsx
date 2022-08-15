@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     });
     const document = await response.json();
 
-    const response_ = await fetch(`${process.env.API_URl}/authors`);
+    const response_ = await fetch(`${process.env.API_URL}/authors`);
     const authors = await response_.json();
 
     console.log(document);

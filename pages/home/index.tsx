@@ -28,11 +28,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies["request_token"];
 
   try {
-    const response = await fetch(`${process.env.API_URl}/publications`);
+    const response = await fetch(`${process.env.API_URL}/publications`);
     const publications = await response.json();
 
     const response_ = await fetch(
-      `${process.env.API_URl}/publications/my-publications/all`,
+      `${process.env.API_URL}/publications/my-publications/all`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

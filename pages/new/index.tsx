@@ -28,10 +28,10 @@ const NewDocumentPage = ({ authors, publications }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const response = await fetch(`${process.env.API_URl}/authors`);
+    const response = await fetch(`${process.env.API_URL}/authors`);
     const authors = await response.json();
 
-    const response_ = await fetch(`${process.env.API_URl}/publications`);
+    const response_ = await fetch(`${process.env.API_URL}/publications`);
     const publications = await response_.json();
 
     console.log(authors);
