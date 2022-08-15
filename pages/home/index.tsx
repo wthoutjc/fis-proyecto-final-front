@@ -41,6 +41,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     );
     const ownPublications = await response_.json();
 
+    console.log(publications);
+    console.log(ownPublications);
+
     return {
       props: {
         ownPublications,
@@ -48,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     };
   } catch (error) {
+    console.error(error);
     return {
       props: {
         ownPublications: [],

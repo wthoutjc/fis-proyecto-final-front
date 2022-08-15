@@ -27,12 +27,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = await fetch(`${process.env.API_URL}/authors`);
     const authors = await response.json();
 
+    console.log(authors);
+
     return {
       props: {
         authors,
       },
     };
   } catch (error) {
+    console.error(error);
     return {
       props: {
         authors: [],

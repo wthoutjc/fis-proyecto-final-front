@@ -36,12 +36,15 @@ export const getServerSideProps: GetServerSideProps = async ({
     });
     const document = await response.json();
 
+    console.log(document);
+
     return {
       props: {
         document,
       },
     };
   } catch (error) {
+    console.error(error);
     return {
       props: {
         document: null,

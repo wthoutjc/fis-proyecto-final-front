@@ -14,7 +14,11 @@ const EntryPage = ({ document, authors }: Props) => {
   return (
     <Layout title="Document">
       <ConnectedLayout>
-        {document ? <ReadEntry document={document} authors={authors} /> : "No hay documento"}
+        {document ? (
+          <ReadEntry document={document} authors={authors} />
+        ) : (
+          "No hay documento"
+        )}
       </ConnectedLayout>
     </Layout>
   );
@@ -40,6 +44,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     const response_ = await fetch(`${process.env.API_URl}/authors`);
     const authors = await response_.json();
 
+    console.log(document);
+    console.log(authors);
+
     return {
       props: {
         document,
@@ -47,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     };
   } catch (error) {
+    console.error(error);
     return {
       props: {
         document: null,

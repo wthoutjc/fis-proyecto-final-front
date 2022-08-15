@@ -26,12 +26,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = await fetch(`${process.env.API_URL}/loans/`);
     const loans = await response.json();
 
+    console.log(loans);
+
     return {
       props: {
         loans,
       },
     };
   } catch (error) {
+    console.error(error);
     return {
       props: {
         loans: [],
