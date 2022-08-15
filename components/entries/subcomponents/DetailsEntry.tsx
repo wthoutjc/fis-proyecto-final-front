@@ -1,5 +1,15 @@
-import { Box, Grid, Typography, capitalize, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  capitalize,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import { IPublication } from "../../../interfaces";
+
+// Icons
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 interface Props {
   document: IPublication;
@@ -10,14 +20,14 @@ const DetailsEntry = ({ document }: Props) => {
     id,
     name,
     description,
-    archivied,
+    archived,
     createdAt,
-    file,
     idISBN,
     idSSN,
     inPhysical,
     stock,
     type,
+    file,
   } = document;
 
   return (
@@ -87,7 +97,7 @@ const DetailsEntry = ({ document }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body1">{archivied ? "Si" : "No"}</Typography>
+          <Typography variant="body1">{archived ? "Si" : "No"}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2" color="text.secondary">
@@ -104,6 +114,34 @@ const DetailsEntry = ({ document }: Props) => {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">{inPhysical ? "Sí" : "No"}</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body2" color="text.secondary">
+            PDF
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          {file ? (
+            <Typography variant="body1">
+              <Tooltip
+                title="Ir al PDF"
+                onClick={() => {
+                  const w = window.open(file.documentLink, "_blank");
+                  if (w) {
+                    w.focus();
+                  }
+                }}
+              >
+                <IconButton>
+                  <PictureAsPdfIcon />
+                </IconButton>
+              </Tooltip>
+            </Typography>
+          ) : (
+            <Typography variant="body1" color="white">
+              No tiene link
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Box>

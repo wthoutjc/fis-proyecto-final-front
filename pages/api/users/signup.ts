@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("API Method: REGISTER");
   const { method } = req;
 
   switch (method) {

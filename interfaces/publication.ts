@@ -1,14 +1,17 @@
+// Interfaces
+import { IAuthor, IFile } from "./";
+
 export interface IPublication {
   id: number;
   name: string;
   description: string;
-  author: string;
+  author: IAuthor;
   type: string;
   idISBN: string | null;
   idSSN: string | null;
-  archivied: boolean;
+  archived: boolean;
   inPhysical: boolean;
   stock: number;
-  file: File | null;
+  file: IFile;
   createdAt: string;
 }

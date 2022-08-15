@@ -23,14 +23,17 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 // Components
 import { Menu } from "../../components/ui/menu";
 
+// Redux
+import { useAppSelector } from "../../hooks";
+
 interface Props {
   document: IPublication;
 }
 
 const Card = ({ document }: Props) => {
-  console.log(document);
-  
   const router = useRouter();
+
+  const { accessToken } = useAppSelector((state) => state.auth);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,6 +44,20 @@ const Card = ({ document }: Props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDesarchivar = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/publications/back-to-life/${document.id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
   };
 
   const handleTo = () => {
@@ -119,6 +136,16 @@ const Card = ({ document }: Props) => {
         <Button variant="text" color="success" size="small" onClick={handleTo}>
           Abrir
         </Button>
+        {document.archived && (
+          <Button
+            variant="contained"
+            color="info"
+            size="small"
+            onClick={handleDesarchivar}
+          >
+            Desarchivar
+          </Button>
+        )}
       </CardActions>
     </MUICard>
   );

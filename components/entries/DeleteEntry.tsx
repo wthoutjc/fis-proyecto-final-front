@@ -57,13 +57,13 @@ const DeleteEntry = ({ document }: Props) => {
             borderRadius: 2,
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Box
             display="flex"
             flexDirection={"column"}
             alignItems={"center"}
-            justifyContent={"space-between"}
           >
             <Box>
               <Image

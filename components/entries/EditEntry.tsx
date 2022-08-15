@@ -15,9 +15,10 @@ import {
   RadioGroup,
   Select,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 // Redux
 import { useAppSelector } from "../../hooks";
@@ -27,6 +28,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 // Interfaces
 import { IPublication, IAuthor } from "../../interfaces";
@@ -44,6 +46,8 @@ interface UpdateDocument {
   idISBN: string | null;
   idSSN: string | null;
   file: FileList | null;
+  stock: number | null;
+  inPhysical: boolean | null;
 }
 
 const EditEntry = ({ document, authors }: Props) => {
@@ -54,6 +58,7 @@ const EditEntry = ({ document, authors }: Props) => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateDocument>({
@@ -73,6 +78,8 @@ const EditEntry = ({ document, authors }: Props) => {
 
   const handleUpdateDocument = async (updateDocument: UpdateDocument) => {
     setLoading(true);
+    const inPhysical = typeof updateDocument.inPhysical === "string";
+
     const data = new FormData();
     data.append("name", updateDocument.name);
     data.append("description", updateDocument.description);
@@ -83,11 +90,15 @@ const EditEntry = ({ document, authors }: Props) => {
     if (updateDocument.idSSN) data.append("idSSN", updateDocument.idSSN);
     if (updateDocument.authorId)
       data.append("authorId", String(updateDocument.authorId));
+    if (updateDocument.stock)
+      data.append("stock", String(updateDocument.stock));
+    if (updateDocument.inPhysical)
+      data.append("inPhysical", String(inPhysical));
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/publications/${document.id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -96,8 +107,8 @@ const EditEntry = ({ document, authors }: Props) => {
     );
     if (response) setLoading(false);
 
-    console.log(response);
     const result = await response.json();
+    console.log(result);
   };
 
   return (
@@ -224,23 +235,8 @@ const EditEntry = ({ document, authors }: Props) => {
               >
                 Nota:{" "}
                 <i>
-                  los documentos de tipo ponencia y artículo científico tendrán
-                  un campo adicional para la revista o conferencia en la que
-                  fueron publicados.
-                </i>
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                textAlign={"justify"}
-                fontWeight={200}
-                fontSize={12}
-              >
-                Nota:{" "}
-                <i>
-                  los documentos de tipo ponencia y artículo científico tendrán
-                  un campo adicional para la revista o conferencia en la que
-                  fueron publicados.
+                  los documentos de tipo artículo científico tendrán un código
+                  diferente al de los libros y ponencias.
                 </i>
               </Typography>
             </Box>
@@ -269,6 +265,56 @@ const EditEntry = ({ document, authors }: Props) => {
               ),
             }}
           />
+          <TextField
+            fullWidth
+            type="number"
+            autoComplete="stock"
+            sx={{ marginBottom: "1em" }}
+            placeholder="Stock"
+            label="Stock"
+            error={!!errors.stock}
+            helperText={
+              !!errors.stock
+                ? errors.stock.message
+                : "Escribe el stock del documento"
+            }
+            {...register("stock", {
+              required: "El stock es un campo requerido",
+            })}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <InventoryIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Typography variant="body2" color="text.secondary" fontWeight={200}>
+            Nota:{" "}
+            <i>
+              el stock es la cantidad de documentos que se tienen disponibles
+              para prestar.
+            </i>
+          </Typography>
+          <Box sx={{ mt: 2, mb: 2 }}>
+            <Typography variant="body1" fontWeight={500} color="white">
+              ¿El documento es físico?
+            </Typography>
+            <Controller
+              name="inPhysical"
+              control={control}
+              rules={{ required: false }}
+              render={({ field }) => (
+                <Tooltip title="Sí">
+                  <Checkbox
+                    {...field}
+                    {...register("inPhysical")}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </Tooltip>
+              )}
+            />
+          </Box>
           <TextField
             fullWidth
             type="file"

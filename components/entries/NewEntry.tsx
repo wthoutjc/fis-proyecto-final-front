@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -13,9 +14,10 @@ import {
   RadioGroup,
   Select,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 // Redux
 import { useAppSelector } from "../../hooks";
@@ -25,6 +27,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 // Interfaces
 import { IAuthor } from "../../interfaces";
@@ -38,6 +41,8 @@ interface RegisterDocument {
   idSSN: string | null;
   file: FileList | null;
   authorId: number | null;
+  stock: number | null;
+  inPhysical: boolean | null;
 }
 
 interface Props {
@@ -52,6 +57,7 @@ const NewEntry = ({ authors }: Props) => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterDocument>();
@@ -62,6 +68,8 @@ const NewEntry = ({ authors }: Props) => {
 
   const handleNewDocument = async (registerDocument: RegisterDocument) => {
     setLoading(true);
+    const inPhysical = typeof registerDocument.inPhysical === "string";
+
     const data = new FormData();
     data.append("name", registerDocument.name);
     data.append("description", registerDocument.description);
@@ -72,6 +80,10 @@ const NewEntry = ({ authors }: Props) => {
     if (registerDocument.idSSN) data.append("idSSN", registerDocument.idSSN);
     if (registerDocument.authorId)
       data.append("authorId", String(registerDocument.authorId));
+    if (registerDocument.stock)
+      data.append("stock", String(registerDocument.stock));
+    if (registerDocument.inPhysical)
+      data.append("inPhysical", String(inPhysical));
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/publications`,
@@ -85,6 +97,7 @@ const NewEntry = ({ authors }: Props) => {
     );
     if (response) setLoading(false);
     const result = await response.json();
+    console.log(result);
   };
 
   return (
@@ -250,6 +263,56 @@ const NewEntry = ({ authors }: Props) => {
               ),
             }}
           />
+          <TextField
+            fullWidth
+            type="number"
+            autoComplete="stock"
+            sx={{ marginBottom: "1em" }}
+            placeholder="Stock"
+            label="Stock"
+            error={!!errors.stock}
+            helperText={
+              !!errors.stock
+                ? errors.stock.message
+                : "Escribe el stock del documento"
+            }
+            {...register("stock", {
+              required: "El stock es un campo requerido",
+            })}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <InventoryIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Typography variant="body2" color="text.secondary" fontWeight={200}>
+            Nota:{" "}
+            <i>
+              el stock es la cantidad de documentos que se tienen disponibles
+              para prestar.
+            </i>
+          </Typography>
+          <Box sx={{ mt: 2, mb: 2 }}>
+            <Typography variant="body1" fontWeight={500} color="white">
+              ¿El documento es físico?
+            </Typography>
+            <Controller
+              name="inPhysical"
+              control={control}
+              rules={{ required: false }}
+              render={({ field }) => (
+                <Tooltip title="Sí">
+                  <Checkbox
+                    {...field}
+                    {...register("inPhysical")}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </Tooltip>
+              )}
+            />
+          </Box>
           <TextField
             fullWidth
             type="file"

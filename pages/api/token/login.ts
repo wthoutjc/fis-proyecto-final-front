@@ -5,8 +5,6 @@ import { serialize } from "cookie";
 import { loginAuth } from "../../../auth";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("API Method: LOGIN");
-
   const { method } = req;
 
   switch (method) {
@@ -16,7 +14,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const data = await loginAuth(email, password);
 
       if (data) {
-        console.log(data.access_token);
         const serialized = serialize("request_token", data.access_token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",

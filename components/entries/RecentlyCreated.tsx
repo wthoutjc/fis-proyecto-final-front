@@ -17,9 +17,8 @@ const RecentlyCreated = ({ publications }: Props) => {
       <Box
         display={"flex"}
         flexDirection="column"
-        sx={{ maxHeight: "750px", overflow: "auto" }}
+        sx={{ maxHeight: "100vh", overflow: "auto" }}
       >
-        En construcción
         {publications.map((document, i) => (
           <Card key={i} document={document} />
         ))}

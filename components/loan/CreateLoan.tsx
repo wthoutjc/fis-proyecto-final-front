@@ -16,7 +16,6 @@ const CreateLoan = ({ document }: Props) => {
   const { accessToken } = useSelector((state: any) => state.auth);
 
   const handleLoan = async () => {
-    console.log("Loan");
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/loans`, {
       method: "POST",
       headers: {
