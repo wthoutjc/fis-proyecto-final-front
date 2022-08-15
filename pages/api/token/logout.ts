@@ -12,16 +12,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.setHeader(
           "Set-Cookie",
           serialize("request_token", "", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== "development",
-            sameSite: "none",
             maxAge: -1,
             path: "/",
           })
         );
-        return res
-          .status(200)
-          .json({ message: "Token eliminado satisfactoriamente." });
+        res.writeHead(302, { Location: "/" });
+        return res.end();
       }
   }
 };
