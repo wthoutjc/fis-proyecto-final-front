@@ -144,34 +144,38 @@ const NewEntry = ({ authors }: Props) => {
               ),
             }}
           />
-          <Box
-            display="flex"
-            justifyContent={"space-between"}
-            alignItems={"flex-start"}
-          >
-            <FormControl sx={{ width: "70%", marginBottom: "1em" }}>
-              <InputLabel id="autores-label">Autor</InputLabel>
-              <Select
-                labelId="autores-label"
-                id="autores-label"
-                label="Autor"
-                defaultValue={""}
-                {...register("authorId")}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <PeopleAltIcon />
-                  </InputAdornment>
-                }
-              >
-                {authors.map((author, i) => (
-                  <MenuItem key={i} value={author.id}>
-                    <ListItemText primary={author.name} />
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>Seleccione el autor</FormHelperText>
-            </FormControl>
-          </Box>
+          {authors.length > 0 ? (
+            <Box
+              display="flex"
+              justifyContent={"space-between"}
+              alignItems={"flex-start"}
+            >
+              <FormControl sx={{ width: "70%", marginBottom: "1em" }}>
+                <InputLabel id="autores-label">Autor</InputLabel>
+                <Select
+                  labelId="autores-label"
+                  id="autores-label"
+                  label="Autor"
+                  defaultValue={""}
+                  {...register("authorId")}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <PeopleAltIcon />
+                    </InputAdornment>
+                  }
+                >
+                  {authors.map((author, i) => (
+                    <MenuItem key={i} value={author.id}>
+                      <ListItemText primary={author.name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>Seleccione el autor</FormHelperText>
+              </FormControl>
+            </Box>
+          ) : (
+            "No hay autores"
+          )}
           <Box display="flex" justifyContent={"space-between"} sx={{ mb: 2 }}>
             <FormControl>
               <FormLabel id="tipo-doc">Tipo de documento *</FormLabel>
@@ -216,8 +220,8 @@ const NewEntry = ({ authors }: Props) => {
               >
                 Nota:{" "}
                 <i>
-                  los documentos de tipo artículo científico tendrán
-                  un código diferente al de los libros y ponencias.
+                  los documentos de tipo artículo científico tendrán un código
+                  diferente al de los libros y ponencias.
                 </i>
               </Typography>
             </Box>

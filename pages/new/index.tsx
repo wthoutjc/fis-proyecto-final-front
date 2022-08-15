@@ -26,14 +26,22 @@ const NewDocumentPage = ({ authors }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const response = await fetch(`${process.env.API_URl}/authors`);
-  const authors = await response.json();
+  try {
+    const response = await fetch(`${process.env.API_URl}/authors`);
+    const authors = await response.json();
 
-  return {
-    props: {
-      authors,
-    },
-  };
+    return {
+      props: {
+        authors,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        authors: [],
+      },
+    };
+  }
 };
 
 export default NewDocumentPage;

@@ -3,7 +3,7 @@ import { ConnectedLayout, Layout } from "../../components/layout";
 
 // Components
 import { CreateLoan } from "../../components/loan";
-import { IPublication, IAuthor } from "../../interfaces";
+import { IPublication } from "../../interfaces";
 
 interface Props {
   document: IPublication;
@@ -13,7 +13,7 @@ const LoanPage = ({ document }: Props) => {
   return (
     <Layout title="Document">
       <ConnectedLayout>
-        <CreateLoan document={document} />
+        {document ? <CreateLoan document={document} /> : "No hay documento"}
       </ConnectedLayout>
     </Layout>
   );

@@ -15,9 +15,9 @@ const Loans = ({ loans }: Props) => {
     <Box sx={{ p: 2 }}>
       <Typography variant="h6">Mis préstamos</Typography>
       <Box>
-        {loans.map((loan) => (
+        {loans ? loans.map((loan) => (
           <Card key={loan.id} document={loan.publication} />
-        ))}
+        )) : "No hay préstamos"}
       </Box>
     </Box>
   );

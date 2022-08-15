@@ -17,9 +17,9 @@ const OwnDocs = ({ publications }: Props) => {
         Mis documentos
       </Typography>
       <Box display="flex" sx={{ overflow: "auto", mb: 2 }}>
-        {publications.map((document, i) => (
+        {publications ? publications.map((document, i) => (
           <Card key={i} document={document} />
-        ))}
+        )) : "No hay documentos"}
       </Box>
     </Box>
   );

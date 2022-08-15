@@ -22,14 +22,22 @@ const LoanPage = ({ loans }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const response = await fetch(`${process.env.API_URL}/loans/`);
-  const loans = await response.json();
+  try {
+    const response = await fetch(`${process.env.API_URL}/loans/`);
+    const loans = await response.json();
 
-  return {
-    props: {
-      loans,
-    },
-  };
+    return {
+      props: {
+        loans,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        loans: [],
+      },
+    };
+  }
 };
 
 export default LoanPage;

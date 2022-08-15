@@ -18,9 +18,9 @@ const Authors = ({ authors }: Props) => {
       </Typography>
       <Box display="flex" sx={{ width: "100%" }}>
         <Box display="flex" flexWrap={"wrap"} sx={{ width: "30%" }}>
-          {authors.map((author) => {
-            return <Author key={author.id} author={author} />;
-          })}
+          {authors ? authors.map((author) => (
+            <Author key={author.id} author={author} />
+          )) : "No hay autores"}
         </Box>
         <Box sx={{ width: "70%" }}>
           <NewAuthor />

@@ -16,7 +16,7 @@ const Explore = ({ publications }: Props) => {
       <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
         Explorar
       </Typography>
-      <CTable data={publications} />
+      <CTable data={publications || []} />
     </Box>
   );
 };

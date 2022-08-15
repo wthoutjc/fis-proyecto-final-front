@@ -15,7 +15,7 @@ const DeleteEntryPage = ({ document }: Props) => {
   return (
     <Layout title="Delete - WriteLibrary">
       <ConnectedLayout>
-        <DeleteEntry document={document} />
+        {document ? <DeleteEntry document={document} /> : "No hay documento"}
       </ConnectedLayout>
     </Layout>
   );

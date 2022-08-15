@@ -14,7 +14,7 @@ const EntryPage = ({ document, authors }: Props) => {
   return (
     <Layout title="Document">
       <ConnectedLayout>
-        <ReadEntry document={document} authors={authors} />
+        {document ? <ReadEntry document={document} authors={authors} /> : "No hay documento"}
       </ConnectedLayout>
     </Layout>
   );
